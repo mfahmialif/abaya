@@ -1,0 +1,5 @@
+/**
+ *  Pages Authentication
+ */
+
+'use strict';

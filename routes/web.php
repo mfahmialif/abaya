@@ -1,0 +1,71 @@
+<?php
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AbsensiController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\DepartemenController;
+use App\Http\Controllers\Home\LandingPageController;
+use App\Http\Controllers\Home\PrivacyPolicyController;
+use App\Http\Controllers\Home\AbsensiController as HomeAbsensiController;
+use App\Http\Controllers\Operasi\UserController as OperasiUserController;
+use App\Http\Controllers\Home\DashboardController as HomeDashboardController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Auth::routes([
+    'reset'    => false,
+    'verify'   => false,
+    'confirm'  => false,
+    'email'    => false,
+]);
+
+Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [LandingPageController::class, 'index'])->name('root.index');
+Route::get('/privacy_policy', [PrivacyPolicyController::class, 'index'])->name('privacy_policy.index');
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::prefix('dashboard')->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard.index');
+    });
+
+    Route::prefix('role')->group(function () {
+        Route::get('/', [RoleController::class, 'index'])->name('admin.role.index');
+        Route::get('/data', [RoleController::class, 'data'])->name('admin.role.data');
+        Route::post('/store', [RoleController::class, 'store'])->name('admin.role.store');
+        Route::put('/update', [RoleController::class, 'update'])->name('admin.role.update');
+        Route::delete('/delete', [RoleController::class, 'delete'])->name('admin.role.delete');
+    });
+
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
+        Route::get('/data', [UserController::class, 'data'])->name('admin.user.data');
+        Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');
+        Route::put('/update', [UserController::class, 'update'])->name('admin.user.update');
+        Route::delete('/delete', [UserController::class, 'delete'])->name('admin.user.delete');
+    });
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('admin.profile.index');
+        Route::put('/update', [ProfileController::class, 'update'])->name('admin.profile.update');
+    });
+});
+
+Route::prefix('operasi')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::get('/autocomplete/{query}', [OperasiUserController::class, 'autocomplete'])->name('operasi.user.autocomplete');
+    });
+});

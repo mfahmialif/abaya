@@ -1,0 +1,71 @@
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <div class="app-brand demo">
+        <a href="{{ route('root.index') }}" class="app-brand-link">
+            <span class="app-brand-logo demo">
+                <img src="{{ asset('admin/assets/img/favicon-admin.png') }}"
+                    style="width: 100%;height: 100%;object-fit: contain;" alt="logo">
+            </span>
+            <span class="app-brand-text demo menu-text fw-bold">{{ config('app.name') }}</span>
+        </a>
+
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+            <i class="ti menu-toggle-icon d-none d-xl-block align-middle"></i>
+            <i class="ti ti-x d-block d-xl-none ti-md align-middle"></i>
+        </a>
+    </div>
+
+    <div class="menu-inner-shadow"></div>
+
+    <ul class="menu-inner py-1">
+        <!-- Dashboards -->
+        <li class="menu-item {{ request()->routeIs('admin.dashboard*') ? 'active' : '' }}">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-smart-home"></i>
+                <div data-i18n="Dashboards">Dashboards</div>
+            </a>
+        </li>
+
+        <!-- DATA-->
+        <li class="menu-header small">
+            <span class="menu-header-text" data-i18n="News">DATA</span>
+        </li>
+
+        <!-- Role -->
+        <li class="menu-item {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
+            <a href="{{ route('admin.role.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-key"></i>
+                <div data-i18n="Role">Role</div>
+            </a>
+        </li>
+
+        <!-- ADMINISTRATOR-->
+        <li class="menu-header small">
+            <span class="menu-header-text" data-i18n="Administrator">ADMINISTRATOR</span>
+        </li>
+
+        <!-- Users -->
+        <li class="menu-item {{ request()->routeIs('admin.user*') ? 'active' : '' }}">
+            <a href="{{ route('admin.user.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-user"></i>
+                <div data-i18n="Users">Users</div>
+            </a>
+        </li>
+        <!-- Profile -->
+        <li class="menu-item {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
+            <a href="{{ route('admin.profile.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-settings"></i>
+                <div data-i18n="Profile">Profile</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();document.getElementById('logout-form-sidebar').submit();" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-logout"></i>
+                <div data-i18n="Logout">Logout</div>
+            </a>
+            <form id="logout-form-sidebar" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
+    </ul>
+</aside>
