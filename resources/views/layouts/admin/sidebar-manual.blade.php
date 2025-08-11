@@ -30,13 +30,6 @@
             <span class="menu-header-text" data-i18n="News">DATA</span>
         </li>
 
-        <!-- Role -->
-        <li class="menu-item {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
-            <a href="{{ route('admin.role.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-key"></i>
-                <div data-i18n="Role">Role</div>
-            </a>
-        </li>
 
         <!-- ADMINISTRATOR-->
         <li class="menu-header small">
@@ -50,6 +43,13 @@
                 <div data-i18n="Users">Users</div>
             </a>
         </li>
+        <!-- Role -->
+        <li class="menu-item {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
+            <a href="{{ route('admin.role.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-key"></i>
+                <div data-i18n="Role">Role</div>
+            </a>
+        </li>
         <!-- Profile -->
         <li class="menu-item {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
             <a href="{{ route('admin.profile.index') }}" class="menu-link">
@@ -59,7 +59,8 @@
         </li>
         <li class="menu-item">
             <a href="{{ route('logout') }}"
-                onclick="event.preventDefault();document.getElementById('logout-form-sidebar').submit();" class="menu-link">
+                onclick="event.preventDefault();document.getElementById('logout-form-sidebar').submit();"
+                class="menu-link">
                 <i class="menu-icon tf-icons ti ti-logout"></i>
                 <div data-i18n="Logout">Logout</div>
             </a>
