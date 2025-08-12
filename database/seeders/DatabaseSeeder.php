@@ -50,6 +50,14 @@ class DatabaseSeeder extends Seeder
             'jenis_kelamin' => 'Laki-laki',
         ]);
         DB::table('users')->insert([
+            'email'         => 'user2@example.com',
+            'username'      => 'user2',
+            'name'          => 'User 2',
+            'password'      => bcrypt('user2'),
+            'role_id'       => 2,
+            'jenis_kelamin' => 'Laki-laki',
+        ]);
+        DB::table('users')->insert([
             'email'         => 'jadi@example.com',
             'username'      => 'jadi',
             'name'          => 'Jadi',
@@ -68,24 +76,24 @@ class DatabaseSeeder extends Seeder
 
         // Seeder untuk barang
         $barang1_id = DB::table('barang')->insertGetId([
-            'kode_barang'       => 'KK-1212',
-            'nama'       => 'Kain Katun',
-            'kategori'   => 'mentah',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'kode_barang' => 'KK-1212',
+            'nama'        => 'Kain Katun',
+            'kategori'    => 'mentah',
+            'created_at'  => now(),
+            'updated_at'  => now(),
         ]);
         $barang2_id = DB::table('barang')->insertGetId([
-            'kode_barang'       => 'AA-1212',
-            'nama'       => 'Abaya Hitam',
-            'kategori'   => 'jadi',
-            'created_at' => now(),
-            'updated_at' => now(),
+            'kode_barang' => 'AA-1212',
+            'nama'        => 'Abaya Hitam',
+            'kategori'    => 'jadi',
+            'created_at'  => now(),
+            'updated_at'  => now(),
         ]);
 
         // Seeder untuk stok_barang
         $stok1_id = DB::table('stok_barang')->insertGetId([
             'barang_id'  => $barang1_id,
-            'kode'     => 'KK-001',
+            'kode'       => 'KK-001',
             'ukuran'     => '2 meter',
             'stok'       => 0,
             'harga'      => 50000,
@@ -95,7 +103,7 @@ class DatabaseSeeder extends Seeder
         ]);
         $stok2_id = DB::table('stok_barang')->insertGetId([
             'barang_id'  => $barang2_id,
-            'kode'     => 'AH-001',
+            'kode'       => 'AH-001',
             'ukuran'     => 'L',
             'stok'       => 0,
             'harga'      => 200000,
@@ -146,19 +154,19 @@ class DatabaseSeeder extends Seeder
             'created_at'     => now(),
             'updated_at'     => now(),
         ]);
-        DB::table('transaksi')->insert([
-            'barang_keluar_id' => $barangKeluarSitiId,
-            'nama_pembeli'     => 'Siti Aminah',
-            'alamat'           => 'Jl. Melati No. 5',
-            'no_hp'            => '08234567890',
-            'email'            => 'siti@example.com',
-            'tanggal'          => now()->toDateString(),
-            'total'            => 200000,
-            'keterangan'       => 'Pembelian Abaya Hitam',
-            'created_at'       => now(),
-            'updated_at'       => now(),
-        ]);
-    // ...existing code...
+        // DB::table('transaksi')->insert([
+        //     'barang_keluar_id' => $barangKeluarSitiId,
+        //     'nama_pembeli'     => 'Siti Aminah',
+        //     'alamat'           => 'Jl. Melati No. 5',
+        //     'no_hp'            => '08234567890',
+        //     'email'            => 'siti@example.com',
+        //     'tanggal'          => now()->toDateString(),
+        //     'total'            => 200000,
+        //     'keterangan'       => 'Pembelian Abaya Hitam',
+        //     'created_at'       => now(),
+        //     'updated_at'       => now(),
+        // ]);
+        // ...existing code...
 
         // Transaksi Siti membeli Abaya Hitam 1 pcs
         $jumlahSiti         = 1;
@@ -170,18 +178,18 @@ class DatabaseSeeder extends Seeder
             'created_at'     => now(),
             'updated_at'     => now(),
         ]);
-        DB::table('transaksi')->insert([
-            'barang_keluar_id' => $barangKeluarSitiId,
-            'nama_pembeli'     => 'Siti Aminah',
-            'alamat'           => 'Jl. Melati No. 5',
-            'no_hp'            => '08234567890',
-            'email'            => 'siti@example.com',
-            'tanggal'          => now()->toDateString(),
-            'total'            => 200000,
-            'keterangan'       => 'Pembelian Abaya Hitam',
-            'created_at'       => now(),
-            'updated_at'       => now(),
-        ]);
+        // DB::table('transaksi')->insert([
+        //     'barang_keluar_id' => $barangKeluarSitiId,
+        //     'nama_pembeli'     => 'Siti Aminah',
+        //     'alamat'           => 'Jl. Melati No. 5',
+        //     'no_hp'            => '08234567890',
+        //     'email'            => 'siti@example.com',
+        //     'tanggal'          => now()->toDateString(),
+        //     'total'            => 200000,
+        //     'keterangan'       => 'Pembelian Abaya Hitam',
+        //     'created_at'       => now(),
+        //     'updated_at'       => now(),
+        // ]);
         // Transaksi Siti membeli Abaya Hitam 1 pcs
         $jumlahSiti         = 1;
         $barangKeluarSitiId = DB::table('barang_keluar')->insertGetId([
@@ -192,17 +200,42 @@ class DatabaseSeeder extends Seeder
             'created_at'     => now(),
             'updated_at'     => now(),
         ]);
+        // DB::table('transaksi')->insert([
+        //     'barang_keluar_id' => $barangKeluarSitiId,
+        //     'nama_pembeli'     => 'Siti Aminah',
+        //     'alamat'           => 'Jl. Melati No. 5',
+        //     'no_hp'            => '08234567890',
+        //     'email'            => 'siti@example.com',
+        //     'tanggal'          => now()->toDateString(),
+        //     'total'            => 200000,
+        //     'keterangan'       => 'Pembelian Abaya Hitam',
+        //     'created_at'       => now(),
+        //     'updated_at'       => now(),
+        // ]);
+
+// Seeder untuk transaksi
         DB::table('transaksi')->insert([
-            'barang_keluar_id' => $barangKeluarSitiId,
-            'nama_pembeli'     => 'Siti Aminah',
-            'alamat'           => 'Jl. Melati No. 5',
-            'no_hp'            => '08234567890',
-            'email'            => 'siti@example.com',
-            'tanggal'          => now()->toDateString(),
-            'total'            => 200000,
-            'keterangan'       => 'Pembelian Abaya Hitam',
-            'created_at'       => now(),
-            'updated_at'       => now(),
+            'kode_transaksi' => 'TRX-001',
+            'pembeli_id'     => 2,
+            'stok_barang_id' => $stok2_id,
+            'jumlah'         => 1,
+            'tanggal'        => now()->toDateString(),
+            'total_harga'    => 200000,
+            'status'         => 'proses',
+            'created_at'     => now(),
+            'updated_at'     => now(),
+        ]);
+
+        DB::table('transaksi')->insert([
+            'kode_transaksi' => 'TRX-002',
+            'pembeli_id'     => 3,
+            'stok_barang_id' => $stok1_id,
+            'jumlah'         => 2,
+            'tanggal'        => now()->subDays(1)->toDateString(),
+            'total_harga'    => 100000,
+            'status'         => 'selesai',
+            'created_at'     => now(),
+            'updated_at'     => now(),
         ]);
 
         // Update stok barang sesuai barang masuk dan keluar (setelah semua transaksi dan barang keluar diinsert)

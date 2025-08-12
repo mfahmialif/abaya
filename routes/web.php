@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\BarangMentahStokController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Home\LandingPageController;
 use App\Http\Controllers\Operasi\BarangController;
@@ -40,7 +41,7 @@ Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'index'])->n
 Route::get('/', [LandingPageController::class, 'index'])->name('root.index');
 
 Route::prefix('admin')->middleware(['auth', 'role:admin,jadi,mentah'])->group(function () {
-     Route::prefix('dashboard')->group(function () {
+    Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard.index');
     });
 
@@ -98,6 +99,13 @@ Route::prefix('admin')->middleware(['auth', 'role:admin,jadi,mentah'])->group(fu
             Route::put('/update', [BarangJadiKeluarController::class, 'update'])->name('admin.barang-jadi.keluar.update');
             Route::delete('/delete', [BarangJadiKeluarController::class, 'delete'])->name('admin.barang-jadi.keluar.delete');
         });
+    });
+
+    Route::prefix('transaksi')->middleware('role:admin')->group(function () {
+        Route::get('/', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
+        Route::get('/data', [TransaksiController::class, 'data'])->name('admin.transaksi.data');
+        Route::put('/updateStatus', [TransaksiController::class, 'updateStatus'])->name('admin.transaksi.updateStatus');
+        Route::delete('/delete', [TransaksiController::class, 'delete'])->name('admin.transaksi.delete');
     });
 
     Route::prefix('role')->middleware('role:admin')->group(function () {

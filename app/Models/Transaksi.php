@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,11 +8,16 @@ class Transaksi extends Model
 {
     use HasFactory;
 
-    protected $table = 'transaksi';
+    protected $table   = 'transaksi';
     protected $guarded = [];
 
-    public function barangKeluar()
+    public function pembeli()
     {
-        return $this->belongsTo(BarangKeluar::class, 'barang_keluar_id');
+        return $this->belongsTo(User::class, 'pembeli_id');
+    }
+
+    public function stokBarang()
+    {
+        return $this->belongsTo(StokBarang::class, 'stok_barang_id');
     }
 }

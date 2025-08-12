@@ -16,9 +16,4 @@ class BarangKeluar extends Model
     {
         return $this->belongsTo(StokBarang::class, 'stok_barang_id');
     }
-
-    public function transaksi()
-    {
-        return $this->hasOne(Transaksi::class, 'barang_keluar_id');
-    }
 }

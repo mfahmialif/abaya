@@ -38,7 +38,7 @@
             </li>
             <li class="menu-item {{ request()->routeIs('admin.barang-mentah.stok*') ? 'active' : '' }}">
                 <a href="{{ route('admin.barang-mentah.stok.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <i class="menu-icon tf-icons ti ti-list-check"></i>
                     <div data-i18n="Stok">Stok</div>
                 </a>
             </li>
@@ -63,13 +63,13 @@
             </li>
             <li class="menu-item {{ request()->routeIs('admin.barang-jadi.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.barang-jadi.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <i class="menu-icon tf-icons ti ti-package "></i>
                     <div data-i18n="Barang">Barang</div>
                 </a>
             </li>
             <li class="menu-item {{ request()->routeIs('admin.barang-jadi.stok*') ? 'active' : '' }}">
                 <a href="{{ route('admin.barang-jadi.stok.index') }}" class="menu-link">
-                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <i class="menu-icon tf-icons ti ti-list-check"></i>
                     <div data-i18n="Stok">Stok</div>
                 </a>
             </li>
@@ -87,6 +87,18 @@
             </li>
         @endif
 
+        @if (Auth::user()->role->akses == 'admin')
+            <!-- Penjualan-->
+            <li class="menu-header small">
+                <span class="menu-header-text" data-i18n="Penjualan">Penjualan</span>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.transaksi.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.transaksi.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-shopping-cart "></i>
+                    <div data-i18n="Transaksi">Transaksi</div>
+                </a>
+            </li>
+        @endif
 
         <!-- ADMINISTRATOR-->
         <li class="menu-header small">

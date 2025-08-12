@@ -3,6 +3,7 @@ namespace App\Http\Services;
 
 use App\Models\Tahun;
 use App\Models\Jadwal;
+use App\Models\Transaksi;
 use App\Models\StokBarang;
 use App\Models\BarangMasuk;
 use App\Models\BarangKeluar;
@@ -474,7 +475,8 @@ class Helper
     public static function updateStokBarang($stokBarangId){
         $stokMasuk = BarangMasuk::where('stok_barang_id', $stokBarangId)->sum('jumlah');
         $stokKeluar = BarangKeluar::where('stok_barang_id', $stokBarangId)->sum('jumlah');
-        $stokAkhir = $stokMasuk - $stokKeluar;
+        $transaksi = Transaksi::where('stok_barang_id', $stokBarangId)->where('status', 'selesai')->sum('jumlah');
+        $stokAkhir = $stokMasuk - $stokKeluar - $transaksi;
         StokBarang::where('id', $stokBarangId)->update(['stok' => $stokAkhir]);
 
         return $stokAkhir;

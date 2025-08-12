@@ -15,19 +15,14 @@ class CreateTransaksiTable extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('barang_keluar_id');
-            $table->string('nama_pembeli');
-            $table->string('alamat')->nullable();
-            $table->string('no_hp')->nullable();
-            $table->string('email')->nullable();
+            $table->string('kode_transaksi')->unique();
+            $table->foreignId('pembeli_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('stok_barang_id')->constrained('stok_barang', 'id')->onDelete('cascade');
+            $table->integer('jumlah');
             $table->date('tanggal');
-            $table->decimal('total', 15, 2)->default(0);
-            $table->text('keterangan')->nullable();
+            $table->decimal('total_harga', 15, 2)->default(0);
+            $table->enum('status', ['proses', 'selesai'])->default('proses');
             $table->timestamps();
-
-            $table->foreign('barang_keluar_id')
-                ->references('id')->on('barang_keluar')
-                ->onDelete('cascade');
         });
     }
 
