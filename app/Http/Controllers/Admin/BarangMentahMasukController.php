@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Services\Helper;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
-use App\Models\Role;
 use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -24,10 +23,10 @@ class BarangMentahMasukController extends Controller
         $data   = BarangMasuk::join('stok_barang', 'barang_masuk.stok_barang_id', '=', 'stok_barang.id')
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->where('barang.kategori', 'mentah')
-            ->when($request->tanggal_mulai && !$request->tanggal_selesai, function ($query) use ($request) {
+            ->when($request->tanggal_mulai && ! $request->tanggal_selesai, function ($query) use ($request) {
                 $query->where('barang_masuk.tanggal', '>=', $request->tanggal_mulai);
             })
-            ->when(!$request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
+            ->when(! $request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
                 $query->where('barang_masuk.tanggal', '<=', $request->tanggal_selesai);
             })
             ->when($request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
@@ -157,7 +156,10 @@ class BarangMentahMasukController extends Controller
                 'keterangan'     => $request->keterangan,
             ]);
 
-            Helper::updateStokBarang($stokBarang->id);
+            $stokAkhir = Helper::updateStokBarang($stokBarang->id);
+            if ($stokAkhir < 0) {
+                abort(400, 'Stok barang tidak mencukupi');
+            }
 
             DB::commit();
             return [
@@ -204,7 +206,10 @@ class BarangMentahMasukController extends Controller
                 'keterangan' => $request->keterangan,
             ]);
 
-            Helper::updateStokBarang($barangMasuk->stok_barang_id);
+            $stokAkhir = Helper::updateStokBarang($barangMasuk->stok_barang_id);
+            if ($stokAkhir < 0) {
+                abort(400, 'Stok barang tidak mencukupi');
+            }
 
             DB::commit();
             return [
@@ -242,8 +247,11 @@ class BarangMentahMasukController extends Controller
             $stokBarang  = $barangMasuk->stokBarang;
 
             $barangMasuk->delete();
-            Helper::updateStokBarang($stokBarang->id);
+            $stokAkhir = Helper::updateStokBarang($stokBarang->id);
 
+            if ($stokAkhir < 0) {
+                abort(400, 'Stok barang tidak mencukupi');
+            }
             DB::commit();
             return [
                 'status'  => true,

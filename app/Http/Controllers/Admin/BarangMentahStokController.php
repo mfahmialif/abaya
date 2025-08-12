@@ -132,4 +132,37 @@ class BarangMentahStokController extends Controller
         }
     }
 
+    public function delete(Request $request)
+    {
+        try {
+            DB::beginTransaction();
+            $request->validate([
+                'id' => 'required',
+            ]);
+
+            $stokBarang = StokBarang::findOrFail($request->id);
+            if ($stokBarang->foto) {
+                if (file_exists(public_path('stok-barang/' . $stokBarang->foto))) {
+                    unlink(public_path('stok-barang/' . $stokBarang->foto));
+                }
+            }
+            $stokBarang->delete();
+
+            DB::commit();
+            return [
+                'status'  => true,
+                'type'    => 'success',
+                'message' => 'Success',
+                'request' => $request->all(),
+            ];
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return [
+                'status'  => false,
+                'type'    => 'error',
+                'message' => $th->getMessage(),
+                'request' => $request->all(),
+            ];
+        }
+    }
 }

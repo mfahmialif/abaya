@@ -121,9 +121,7 @@ class BarangMentahKeluarController extends Controller
                 'keterangan'     => $request->keterangan,
             ]);
 
-            Helper::updateStokBarang($stokBarang->id);
-
-            $stokAkhir = Helper::updateStokBarang($barangKeluar->stok_barang_id);
+            $stokAkhir = Helper::updateStokBarang($stokBarang->id);
             if ($stokAkhir < 0) {
                 abort(400, 'Stok barang tidak mencukupi');
             }
