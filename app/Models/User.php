@@ -25,7 +25,6 @@ class User extends Authenticatable
         'email',
         'username',
         'role_id',
-        'departemen_id',
         'photo'
     ];
 
@@ -51,14 +50,5 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
-    }
-
-    public function absensi()
-    {
-        return $this->hasMany(Absensi::class, 'users_id', 'id');
-    }
-
-    public function departemen(){
-        return $this->belongsTo(Departemen::class);
     }
 }

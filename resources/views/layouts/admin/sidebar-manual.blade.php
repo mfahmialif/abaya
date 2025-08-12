@@ -25,56 +25,67 @@
             </a>
         </li>
 
-        <!-- Barang Mentah-->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.barang-mentah') ? 'active' : '' }}">
-            <a href="{{ route('admin.barang-mentah.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-package"></i>
-                <div data-i18n="Barang">Barang</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.barang-mentah.stok*') ? 'active' : '' }}">
-            <a href="{{ route('admin.barang-mentah.stok.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-package"></i>
-                <div data-i18n="Stok">Stok</div>
-            </a>
-        </li>
-        <li class="menu-item" {{ request()->routeIs('admin.barang-mentah.masuk*') ? 'active' : '' }}>
-            <a href="{{ route('admin.barang-mentah.masuk.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
-                <div data-i18n="Masuk">Masuk</div>
-            </a>
-        </li>
-        <li class="menu-item {{ request()->routeIs('admin.barang-mentah.keluar*') ? 'active' : '' }}">
-            <a href="{{ route('admin.barang-mentah.keluar.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
-                <div data-i18n="Keluar">Keluar</div>
-            </a>
-        </li>
-        <!-- Barang Jadi-->
-        <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Barang Jadi">Barang Jadi</span>
-        </li>
-        <li class="menu-item">
-            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-package"></i>
-                <div data-i18n="Stok">Stok</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
-                <div data-i18n="Masuk">Masuk</div>
-            </a>
-        </li>
-        <li class="menu-item">
-            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
-                <div data-i18n="Keluar">Keluar</div>
-            </a>
-        </li>
+        @if (Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'mentah')
+            <!-- Barang Mentah-->
+            <li class="menu-header small">
+                <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-mentah.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-mentah.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <div data-i18n="Barang">Barang</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-mentah.stok*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-mentah.stok.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <div data-i18n="Stok">Stok</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-mentah.masuk*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-mentah.masuk.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
+                    <div data-i18n="Masuk">Masuk</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-mentah.keluar*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-mentah.keluar.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
+                    <div data-i18n="Keluar">Keluar</div>
+                </a>
+            </li>
+        @endif
+
+        @if (Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'jadi')
+            <!-- Barang Jadi-->
+            <li class="menu-header small">
+                <span class="menu-header-text" data-i18n="Barang Jadi">Barang Jadi</span>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-jadi.index') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-jadi.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <div data-i18n="Barang">Barang</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-jadi.stok*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-jadi.stok.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-package"></i>
+                    <div data-i18n="Stok">Stok</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-jadi.masuk*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-jadi.masuk.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
+                    <div data-i18n="Masuk">Masuk</div>
+                </a>
+            </li>
+            <li class="menu-item {{ request()->routeIs('admin.barang-jadi.keluar*') ? 'active' : '' }}">
+                <a href="{{ route('admin.barang-jadi.keluar.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
+                    <div data-i18n="Keluar">Keluar</div>
+                </a>
+            </li>
+        @endif
 
 
         <!-- ADMINISTRATOR-->
@@ -82,20 +93,23 @@
             <span class="menu-header-text" data-i18n="Setting">Setting</span>
         </li>
 
-        <!-- Users -->
-        <li class="menu-item {{ request()->routeIs('admin.user*') ? 'active' : '' }}">
-            <a href="{{ route('admin.user.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-user"></i>
-                <div data-i18n="Users">Users</div>
-            </a>
-        </li>
-        <!-- Role -->
-        <li class="menu-item {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
-            <a href="{{ route('admin.role.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons ti ti-key"></i>
-                <div data-i18n="Role">Role</div>
-            </a>
-        </li>
+        @if (Auth::user()->role->akses == 'admin')
+            <!-- Users -->
+            <li class="menu-item {{ request()->routeIs('admin.user*') ? 'active' : '' }}">
+                <a href="{{ route('admin.user.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-user"></i>
+                    <div data-i18n="Users">Users</div>
+                </a>
+            </li>
+            <!-- Role -->
+            <li class="menu-item {{ request()->routeIs('admin.role*') ? 'active' : '' }}">
+                <a href="{{ route('admin.role.index') }}" class="menu-link">
+                    <i class="menu-icon tf-icons ti ti-key"></i>
+                    <div data-i18n="Role">Role</div>
+                </a>
+            </li>
+        @endif
+
         <!-- Profile -->
         <li class="menu-item {{ request()->routeIs('admin.profile*') ? 'active' : '' }}">
             <a href="{{ route('admin.profile.index') }}" class="menu-link">

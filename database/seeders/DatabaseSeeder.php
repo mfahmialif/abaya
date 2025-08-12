@@ -27,6 +27,12 @@ class DatabaseSeeder extends Seeder
         DB::table('role')->insert([
             'akses' => 'user',
         ]);
+        DB::table('role')->insert([
+            'akses' => 'jadi',
+        ]);
+        DB::table('role')->insert([
+            'akses' => 'mentah',
+        ]);
         DB::table('users')->insert([
             'email'         => 'admin@example.com',
             'username'      => 'admin',
@@ -41,6 +47,22 @@ class DatabaseSeeder extends Seeder
             'name'          => 'User',
             'password'      => bcrypt('user'),
             'role_id'       => 2,
+            'jenis_kelamin' => 'Laki-laki',
+        ]);
+        DB::table('users')->insert([
+            'email'         => 'jadi@example.com',
+            'username'      => 'jadi',
+            'name'          => 'Jadi',
+            'password'      => bcrypt('jadi'),
+            'role_id'       => 3,
+            'jenis_kelamin' => 'Laki-laki',
+        ]);
+        DB::table('users')->insert([
+            'email'         => 'mentah@example.com',
+            'username'      => 'mentah',
+            'name'          => 'Mentah',
+            'password'      => bcrypt('mentah'),
+            'role_id'       => 4,
             'jenis_kelamin' => 'Laki-laki',
         ]);
 
