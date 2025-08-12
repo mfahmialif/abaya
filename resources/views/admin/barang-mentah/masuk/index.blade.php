@@ -1,0 +1,200 @@
+@extends('layouts.admin.template')
+@section('title', 'Barang Mentah Masuk')
+@section('content')
+
+    {{-- @include('admin.barang-mentah.masuk.filter') --}}
+    <div class="card" id="card1">
+        <div class="card-datatable table-responsive pt-0">
+            <table class="datatables-basic table table-hover" id="table-1">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Barang</th>
+                        <th>Tanggal</th>
+                        <th>Jumlah</th>
+                        <th>Keterangan</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    @include('admin.barang-mentah.masuk.add')
+    @include('admin.barang-mentah.masuk.edit')
+
+
+    <div class="modal fade" id="modal_keterangan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">Keterangan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="isi"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+
+@push('scripts')
+    <script>
+        $(document).on('submit', '.form-delete-record', function(e) {
+            e.preventDefault();
+            var id = $(e.target).find('input[name="id"]').val();
+            var name = $(e.target).find('input[name="name"]').val();
+
+            Swal.fire({
+                title: `Are you sure delete ${name}?`,
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                customClass: {
+                    confirmButton: 'btn btn-primary me-3 waves-effect waves-light',
+                    cancelButton: 'btn btn-label-secondary waves-effect waves-light'
+                },
+                buttonsStyling: false
+            }).then(function(result) {
+                if (result.value) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('admin.barang-mentah.masuk.delete') }}",
+                        data: new FormData($(e.target)[0]),
+                        // use [0] because inner swal so there are has 2 target, cant use currentTarget
+                        contentType: false,
+                        processData: false,
+                        success: function(response) {
+                            showToastr(response.type, response.type, response
+                                .message);
+                            dataTable.ajax.reload(null, false);
+                        },
+                    });
+                }
+            });
+        });
+
+        const modalKeterangan = document.getElementById('modal_keterangan')
+        if (modalKeterangan) {
+            modalKeterangan.addEventListener('show.bs.modal', event => {
+                const button = event.relatedTarget;
+                const keterangan = button.getAttribute('data-keterangan');
+
+                $('#isi').attr('style', 'white-space:pre-wrap').html(keterangan);
+            })
+        }
+    </script>
+
+    <script>
+        var dataTable = initDataTables('table-1', 'loader-user', 'card1', 'new-record-button', false,
+            'Barang Mentah Masuk', "{{ route('admin.barang-mentah.masuk.data') }}",
+            [{
+                    data: "nama",
+                    name: "nama",
+                    className: "align-middle",
+                },
+                {
+                    data: "tanggal",
+                    name: "tanggal",
+                    className: "align-middle",
+                },
+                {
+                    data: "jumlah",
+                    name: "jumlah",
+                    className: "align-middle",
+                },
+                {
+                    data: "keterangan",
+                    name: "keterangan",
+                    className: "align-middle",
+                },
+                {
+                    data: "action",
+                    name: "action",
+                    className: "align-middle",
+                    searchable: false,
+                    orderable: false,
+                },
+            ],
+            // ['role_id', 'departemen_id']
+        );
+
+        function initializeAutocomplete(inputSearch, offcanvasID) {
+            $(inputSearch).autocomplete({
+                appendTo: offcanvasID,
+                source: function(request, response) {
+                    var url =
+                        "{{ route('operasi.barang.autocomplete', ['kategori' => 'mentah', 'query' => 'query']) }}";
+                    url = url.replace('query', request.term);
+
+                    $.ajax({
+                        type: "get",
+                        url: url,
+                        success: function(data) {
+                            response(data.map(item => ({
+                                label: item.label,
+                                value: item.value
+                            })));
+                        }
+                    });
+                },
+                select: function(event, ui) {
+                    // Set the label in the user input
+                    $(inputSearch).val(ui.item.value);
+                    $(inputSearch).siblings('button').trigger('click');
+                    return false;
+                }
+            }).data("ui-autocomplete")._renderItem = function(ul, item) {
+                return $("<li>")
+                    .append(`<div style="padding: 5px; font-size: 14px;">${item.label}</div>`)
+                    .appendTo(ul);
+            };
+        }
+
+        function search(formId, kode) {
+            $(formId).find('input[name="stok_barang_id"]').val('');
+
+            $(formId).find('input[name="nama"]').attr('disabled', true);
+            $(formId).find('input[name="ukuran"]').attr('disabled', true);
+            $(formId).find('input[name="satuan"]').attr('disabled', true);
+            $(formId).find('input[name="harga"]').attr('disabled', true);
+
+            $(formId).find('input[name="kode"]').val('');
+            $(formId).find('input[name="nama"]').val('');
+            $(formId).find('input[name="ukuran"]').val('');
+            $(formId).find('input[name="satuan"]').val('');
+            $(formId).find('input[name="harga"]').val('');
+
+            var url =
+                "{{ route('operasi.barang.search', ['kode' => 'kode']) }}";
+            url = url.replace('kode', kode);
+            $.ajax({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                success: function(response) {
+                    $(formId).find('input[name="stok_barang_id"]').val(response.id);
+                    $(formId).find('input[name="kode"]').val(response.kode);
+                    $(formId).find('input[name="nama"]').val(response.barang.nama);
+                    $(formId).find('input[name="ukuran"]').val(response.ukuran);
+                    $(formId).find('input[name="satuan"]').val(response.satuan);
+                    $(formId).find('input[name="harga"]').val(response.harga);
+
+                    $(formId).find('input[name="jumlah"]').focus();
+                },
+                error: function(response) {
+                    showToastr('error', 'error', 'Tidak ditemukan');
+                }
+            });
+        }
+    </script>
+@endpush

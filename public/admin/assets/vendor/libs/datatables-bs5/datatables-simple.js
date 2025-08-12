@@ -428,7 +428,6 @@ function exportAllDataTable(method = "excel", tableId, title) {
     let allData = [];
 
     function fetchDataPart() {
-        console.log("asd");
         return $.ajax({
             url: dt.ajax.url(),
             type: "GET", // sesuaikan dengan method server

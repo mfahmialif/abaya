@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Services;
 
-use App\Models\Departemen;
-use App\Models\Jadwal;
 use App\Models\Tahun;
+use App\Models\Jadwal;
+use App\Models\StokBarang;
+use App\Models\BarangMasuk;
+use App\Models\BarangKeluar;
 
 class Helper
 {
@@ -35,7 +37,7 @@ class Helper
     {
         $nilai = abs($nilai);
         $huruf = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-        $temp = "";
+        $temp  = "";
 
         if ($nilai < 12) {
             $temp = " " . $huruf[$nilai];
@@ -82,7 +84,7 @@ class Helper
     public static function changeFormatSymbol($string)
     {
         $charactersToReplace = ['\\', '/', ':', '*', '?', '<', '>', '|'];
-        $replacement = '-';
+        $replacement         = '-';
 
         $newString = \Str::replace($charactersToReplace, $replacement, $string);
         return $newString;
@@ -154,7 +156,7 @@ class Helper
     public static function changeName($string)
     {
         $charactersToReplace = ['\\', '/', ':', '*', '?', '<', '>', '|', '-', '_'];
-        $replacement = ' ';
+        $replacement         = ' ';
 
         $newString = \Str::replace($charactersToReplace, $replacement, $string);
         return \Str::upper($newString);
@@ -173,7 +175,7 @@ class Helper
 
         $jadwal = Jadwal::where('tahun_id', $tahun->id)->first();
 
-        $mulai = \Carbon::parse($jadwal->mulai)->startOfDay();
+        $mulai    = \Carbon::parse($jadwal->mulai)->startOfDay();
         $berakhir = \Carbon::parse($jadwal->berakhir)->endOfDay();
         $sekarang = \Carbon::now();
 
@@ -269,7 +271,7 @@ class Helper
     public static function formattedArray($elements, $required = false)
     {
         $formattedArray = [];
-        $requiredItems = [];
+        $requiredItems  = [];
 
         if ($required) {
             $requiredItems = $required;
@@ -278,9 +280,9 @@ class Helper
             $id = strtolower(preg_replace('/[^a-z0-9]+/i', '_', $element));
 
             $formattedArray[] = [
-                'id' => $id,
-                'name' => $element,
-                'required' => !in_array($element, $requiredItems) ? "required" : "",
+                'id'       => $id,
+                'name'     => $element,
+                'required' => ! in_array($element, $requiredItems) ? "required" : "",
             ];
         }
 
@@ -418,7 +420,7 @@ class Helper
         $selectedWords = array_rand($arabicWords, min($count, count($arabicWords)));
 
         // Jika hanya satu kata, jadikan array
-        if (!is_array($selectedWords)) {
+        if (! is_array($selectedWords)) {
             $selectedWords = [$selectedWords];
         }
 
@@ -430,7 +432,6 @@ class Helper
 
         return $result;
     }
-
 
     public static function getSheet(Request $request)
     {
@@ -444,7 +445,27 @@ class Helper
 
         return [
             'jumlah_sheet' => $sheetCount,
-            'nama_sheet' => $sheetNames,
+            'nama_sheet'   => $sheetNames,
         ];
+    }
+
+    public static function generateKode($kategori)
+    {
+        if ($kategori === 'mentah') {
+            return 'M-' . uniqid();
+        } elseif ($kategori === 'jadi') {
+            return 'J-' . uniqid();
+        }
+
+        return null; // atau bisa lempar exception kalau kategori tidak valid
+    }
+
+    public static function updateStokBarang($stokBarangId){
+        $stokMasuk = BarangMasuk::where('stok_barang_id', $stokBarangId)->sum('jumlah');
+        $stokKeluar = BarangKeluar::where('stok_barang_id', $stokBarangId)->sum('jumlah');
+        $stokAkhir = $stokMasuk - $stokKeluar;
+        StokBarang::where('id', $stokBarangId)->update(['stok' => $stokAkhir]);
+
+        return $stokAkhir;
     }
 }

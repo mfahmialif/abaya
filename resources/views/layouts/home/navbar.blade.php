@@ -103,7 +103,7 @@
                       </li>
                   @else
                       <li>
-                          <a href="{{ route('login') }}" class="btn btn-primary" target="_blank">
+                          <a href="{{ route('login') }}" class="btn btn-primary">
                               <span class="tf-icons ti ti-login scaleX-n1-rtl me-md-1"></span>
                               <span class="d-none d-md-block">Login/Register</span>
                           </a>

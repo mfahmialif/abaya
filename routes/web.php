@@ -4,15 +4,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AbsensiController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Operasi\BarangController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\DepartemenController;
 use App\Http\Controllers\Home\LandingPageController;
 use App\Http\Controllers\Home\PrivacyPolicyController;
-use App\Http\Controllers\Home\AbsensiController as HomeAbsensiController;
-use App\Http\Controllers\Operasi\UserController as OperasiUserController;
-use App\Http\Controllers\Home\DashboardController as HomeDashboardController;
+use App\Http\Controllers\Admin\BarangMentahStokController;
+use App\Http\Controllers\Admin\BarangMentahMasukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +24,10 @@ use App\Http\Controllers\Home\DashboardController as HomeDashboardController;
 */
 
 Auth::routes([
-    'reset'    => false,
-    'verify'   => false,
-    'confirm'  => false,
-    'email'    => false,
+    'reset'   => false,
+    'verify'  => false,
+    'confirm' => false,
+    'email'   => false,
 ]);
 
 Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -38,6 +36,22 @@ Route::get('/', [LandingPageController::class, 'index'])->name('root.index');
 Route::get('/privacy_policy', [PrivacyPolicyController::class, 'index'])->name('privacy_policy.index');
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::prefix('barang-mentah')->group(function () {
+        Route::prefix('stok')->group(function () {
+            Route::get('/', [BarangMentahStokController::class, 'index'])->name('admin.barang-mentah.stok.index');
+            Route::get('/data', [BarangMentahStokController::class, 'data'])->name('admin.barang-mentah.stok.data');
+            Route::post('/store', [BarangMentahStokController::class, 'store'])->name('admin.barang-mentah.stok.store');
+            Route::put('/update', [BarangMentahStokController::class, 'update'])->name('admin.barang-mentah.stok.update');
+            Route::delete('/delete', [BarangMentahStokController::class, 'delete'])->name('admin.barang-mentah.stok.delete');
+        });
+        Route::prefix('masuk')->group(function () {
+            Route::get('/', [BarangMentahMasukController::class, 'index'])->name('admin.barang-mentah.masuk.index');
+            Route::get('/data', [BarangMentahMasukController::class, 'data'])->name('admin.barang-mentah.masuk.data');
+            Route::post('/store', [BarangMentahMasukController::class, 'store'])->name('admin.barang-mentah.masuk.store');
+            Route::put('/update', [BarangMentahMasukController::class, 'update'])->name('admin.barang-mentah.masuk.update');
+            Route::delete('/delete', [BarangMentahMasukController::class, 'delete'])->name('admin.barang-mentah.masuk.delete');
+        });
+    });
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard.index');
     });
@@ -65,7 +79,8 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 });
 
 Route::prefix('operasi')->group(function () {
-    Route::prefix('user')->group(function () {
-        Route::get('/autocomplete/{query}', [OperasiUserController::class, 'autocomplete'])->name('operasi.user.autocomplete');
+    Route::prefix('barang')->group(function () {
+        Route::get('/search/{kode}', [BarangController::class, 'search'])->name('operasi.barang.search');
+        Route::get('/autocomplete/{kategori}/{query}', [BarangController::class, 'autocomplete'])->name('operasi.barang.autocomplete');
     });
 });

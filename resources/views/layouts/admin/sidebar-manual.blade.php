@@ -25,15 +25,55 @@
             </a>
         </li>
 
-        <!-- DATA-->
+        <!-- Barang Mentah-->
         <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="News">DATA</span>
+            <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
+        </li>
+        <li class="menu-item {{ request()->routeIs('admin.barang-mentah.stok*') ? 'active' : '' }}">
+            <a href="{{ route('admin.barang-mentah.stok.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-package"></i>
+                <div data-i18n="Stok">Stok</div>
+            </a>
+        </li>
+        <li class="menu-item" {{ request()->routeIs('admin.barang-mentah.masuk*') ? 'active' : '' }}>
+            <a href="{{ route('admin.barang-mentah.masuk.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
+                <div data-i18n="Masuk">Masuk</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
+                <div data-i18n="Keluar">Keluar</div>
+            </a>
+        </li>
+        <!-- Barang Jadi-->
+        <li class="menu-header small">
+            <span class="menu-header-text" data-i18n="Barang Jadi">Barang Jadi</span>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-package"></i>
+                <div data-i18n="Stok">Stok</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-arrow-bar-to-right"></i>
+                <div data-i18n="Masuk">Masuk</div>
+            </a>
+        </li>
+        <li class="menu-item">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
+                <div data-i18n="Keluar">Keluar</div>
+            </a>
         </li>
 
 
         <!-- ADMINISTRATOR-->
         <li class="menu-header small">
-            <span class="menu-header-text" data-i18n="Administrator">ADMINISTRATOR</span>
+            <span class="menu-header-text" data-i18n="Setting">Setting</span>
         </li>
 
         <!-- Users -->

@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div id="heroDashboardAnimation" class="hero-animation-img">
-                        <a href="../vertical-menu-template/app-ecommerce-dashboard.html" target="_blank">
+                        <a href="../vertical-menu-template/app-ecommerce-dashboard.html">
                             <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
                                 <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/hero-dashboard-light.png"
                                     alt="hero dashboard" class="animation-img"
