@@ -43,6 +43,7 @@
 <script src="{{ asset('admin/assets/vendor/libs/sortablejs/sortable.js') }}"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.umd.js"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('admin/assets/js/main.js') }}"></script>
@@ -60,6 +61,10 @@
                 });
             });
         }
+    });
+
+    Fancybox.bind("[data-fancybox]", {
+        // Your custom options
     });
 </script>
 

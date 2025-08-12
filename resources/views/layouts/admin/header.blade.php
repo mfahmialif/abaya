@@ -63,6 +63,7 @@
 <link rel="stylesheet" href="{{ asset('admin/assets/vendor/css/pages/cards-advance.css') }}" />
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.css" />
 
 {{-- Top Progress Bar --}}
 <script src="{{ asset('admin/assets/vendor/libs/pace/pace.min.js') }}"></script>

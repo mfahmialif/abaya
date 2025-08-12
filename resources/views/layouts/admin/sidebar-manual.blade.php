@@ -41,8 +41,8 @@
                 <div data-i18n="Masuk">Masuk</div>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('admin.barang-mentah.keluar*') ? 'active' : '' }}">
+            <a href="{{ route('admin.barang-mentah.keluar.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-arrow-bar-to-left"></i>
                 <div data-i18n="Keluar">Keluar</div>
             </a>

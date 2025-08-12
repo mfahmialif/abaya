@@ -1,16 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\BarangMentahKeluarController;
+use App\Http\Controllers\Admin\BarangMentahMasukController;
+use App\Http\Controllers\Admin\BarangMentahStokController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Operasi\BarangController;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Home\LandingPageController;
 use App\Http\Controllers\Home\PrivacyPolicyController;
-use App\Http\Controllers\Admin\BarangMentahStokController;
-use App\Http\Controllers\Admin\BarangMentahMasukController;
+use App\Http\Controllers\Operasi\BarangController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,6 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
         Route::prefix('stok')->group(function () {
             Route::get('/', [BarangMentahStokController::class, 'index'])->name('admin.barang-mentah.stok.index');
             Route::get('/data', [BarangMentahStokController::class, 'data'])->name('admin.barang-mentah.stok.data');
-            Route::post('/store', [BarangMentahStokController::class, 'store'])->name('admin.barang-mentah.stok.store');
             Route::put('/update', [BarangMentahStokController::class, 'update'])->name('admin.barang-mentah.stok.update');
             Route::delete('/delete', [BarangMentahStokController::class, 'delete'])->name('admin.barang-mentah.stok.delete');
         });
@@ -50,6 +50,13 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
             Route::post('/store', [BarangMentahMasukController::class, 'store'])->name('admin.barang-mentah.masuk.store');
             Route::put('/update', [BarangMentahMasukController::class, 'update'])->name('admin.barang-mentah.masuk.update');
             Route::delete('/delete', [BarangMentahMasukController::class, 'delete'])->name('admin.barang-mentah.masuk.delete');
+        });
+        Route::prefix('keluar')->group(function () {
+            Route::get('/', [BarangMentahKeluarController::class, 'index'])->name('admin.barang-mentah.keluar.index');
+            Route::get('/data', [BarangMentahKeluarController::class, 'data'])->name('admin.barang-mentah.keluar.data');
+            Route::post('/store', [BarangMentahKeluarController::class, 'store'])->name('admin.barang-mentah.keluar.store');
+            Route::put('/update', [BarangMentahKeluarController::class, 'update'])->name('admin.barang-mentah.keluar.update');
+            Route::delete('/delete', [BarangMentahKeluarController::class, 'delete'])->name('admin.barang-mentah.keluar.delete');
         });
     });
     Route::prefix('dashboard')->group(function () {

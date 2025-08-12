@@ -3,44 +3,42 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Services\Helper;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\Role;
+use App\Models\BarangKeluar;
 use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
-class BarangMentahMasukController extends Controller
+class BarangMentahKeluarController extends Controller
 {
     public function index()
     {
-        return view('admin.barang-mentah.masuk.index');
+        return view('admin.barang-mentah.keluar.index');
     }
 
     public function data(Request $request)
     {
         $search = request('search.value');
-        $data   = BarangMasuk::join('stok_barang', 'barang_masuk.stok_barang_id', '=', 'stok_barang.id')
+        $data   = BarangKeluar::join('stok_barang', 'barang_keluar.stok_barang_id', '=', 'stok_barang.id')
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->where('barang.kategori', 'mentah')
-            ->when($request->tanggal_mulai && !$request->tanggal_selesai, function ($query) use ($request) {
-                $query->where('barang_masuk.tanggal', '>=', $request->tanggal_mulai);
+            ->when($request->tanggal_mulai && ! $request->tanggal_selesai, function ($query) use ($request) {
+                $query->where('barang_keluar.tanggal', '>=', $request->tanggal_mulai);
             })
-            ->when(!$request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
-                $query->where('barang_masuk.tanggal', '<=', $request->tanggal_selesai);
+            ->when(! $request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
+                $query->where('barang_keluar.tanggal', '<=', $request->tanggal_selesai);
             })
             ->when($request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
-                $query->whereBetween('barang_masuk.tanggal', [$request->tanggal_mulai, $request->tanggal_selesai]);
+                $query->whereBetween('barang_keluar.tanggal', [$request->tanggal_mulai, $request->tanggal_selesai]);
             })
-            ->select('barang_masuk.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'barang.nama', 'barang.kategori', 'stok_barang.kode', 'barang.kode_barang');
+            ->select('barang_keluar.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'barang.nama', 'barang.kategori', 'stok_barang.kode', 'barang.kode_barang');
 
         return DataTables::of($data)
             ->filter(function ($query) use ($search, $request) {
                 $query->where(function ($query) use ($search) {
                     $query->orWhere('barang.nama', 'LIKE', "%$search%");
                     $query->orWhere('stok_barang.kode', 'LIKE', "%$search%");
-                    $query->orWhere('barang_masuk.tanggal', 'LIKE', "%$search%");
+                    $query->orWhere('barang_keluar.tanggal', 'LIKE', "%$search%");
                 });
             })
             ->editColumn('nama', function ($row) {
@@ -106,51 +104,17 @@ class BarangMentahMasukController extends Controller
         try {
             DB::beginTransaction();
             $rules = [
-                'barang_id'      => 'nullable|exists:barang,id',
-                'stok_barang_id' => 'nullable|exists:stok_barang,id',
+                'stok_barang_id' => 'required|exists:stok_barang,id',
                 'tanggal'        => 'required',
                 'jumlah'         => 'required',
                 'keterangan'     => 'nullable',
             ];
 
-            if (is_null($request->barang_id)) {
-                $rules = array_merge($rules, [
-                    'nama' => 'required',
-                ]);
-            }
-
-            if (is_null($request->stok_barang_id)) {
-                $rules = array_merge($rules, [
-                    'ukuran' => 'required',
-                    'satuan' => 'required',
-                    'harga'  => 'required',
-                ]);
-            }
-
             $request->validate($rules);
 
-            $barang = Barang::find($request->barang_id);
-            if (! $barang) {
-                $barang = Barang::create([
-                    'kode_barang' => Helper::generateKodeBarang('mentah'),
-                    'nama'        => $request->nama,
-                    'kategori'    => 'mentah',
-                ]);
-            }
-
             $stokBarang = StokBarang::find($request->stok_barang_id);
-            if (! $stokBarang) {
-                $stokBarang = StokBarang::create([
-                    'barang_id' => $barang->id,
-                    'kode'      => Helper::generateKode('mentah'),
-                    'ukuran'    => $request->ukuran,
-                    'satuan'    => $request->satuan,
-                    'stok'      => $request->jumlah,
-                    'harga'     => $request->harga,
-                ]);
-            }
 
-            $barangMasuk = BarangMasuk::create([
+            $barangKeluar = BarangKeluar::create([
                 'stok_barang_id' => $stokBarang->id,
                 'tanggal'        => $request->tanggal,
                 'jumlah'         => $request->jumlah,
@@ -159,6 +123,10 @@ class BarangMentahMasukController extends Controller
 
             Helper::updateStokBarang($stokBarang->id);
 
+            $stokAkhir = Helper::updateStokBarang($barangKeluar->stok_barang_id);
+            if ($stokAkhir < 0) {
+                abort(400, 'Stok barang tidak mencukupi');
+            }
             DB::commit();
             return [
                 'status'  => true,
@@ -188,7 +156,7 @@ class BarangMentahMasukController extends Controller
         try {
             DB::beginTransaction();
             $rules = [
-                'id'         => 'required|exists:barang_masuk,id',
+                'id'         => 'required|exists:barang_keluar,id',
                 'tanggal'    => 'required',
                 'jumlah'     => 'required',
                 'keterangan' => 'nullable',
@@ -196,15 +164,18 @@ class BarangMentahMasukController extends Controller
 
             $request->validate($rules);
 
-            $barangMasuk = BarangMasuk::findOrFail($request->id);
+            $barangKeluar = BarangKeluar::findOrFail($request->id);
 
-            $barangMasuk->update([
+            $barangKeluar->update([
                 'tanggal'    => $request->tanggal,
                 'jumlah'     => $request->jumlah,
                 'keterangan' => $request->keterangan,
             ]);
 
-            Helper::updateStokBarang($barangMasuk->stok_barang_id);
+            $stokAkhir = Helper::updateStokBarang($barangKeluar->stok_barang_id);
+            if ($stokAkhir < 0) {
+                abort(400, 'Stok barang tidak mencukupi');
+            }
 
             DB::commit();
             return [
@@ -238,10 +209,10 @@ class BarangMentahMasukController extends Controller
                 'id' => 'required',
             ]);
 
-            $barangMasuk = BarangMasuk::findOrFail($request->id);
-            $stokBarang  = $barangMasuk->stokBarang;
+            $barangKeluar = BarangKeluar::findOrFail($request->id);
+            $stokBarang   = $barangKeluar->stokBarang;
 
-            $barangMasuk->delete();
+            $barangKeluar->delete();
             Helper::updateStokBarang($stokBarang->id);
 
             DB::commit();

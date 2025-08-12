@@ -13,6 +13,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Hapus folder stok-barang dan barang
+        if (file_exists(public_path('stok-barang'))) {
+            \File::deleteDirectory(public_path('stok-barang'));
+        }
+        if (file_exists(public_path('barang'))) {
+            \File::deleteDirectory(public_path('barang'));
+        }
         // Seeder lama
         DB::table('role')->insert([
             'akses' => 'admin',

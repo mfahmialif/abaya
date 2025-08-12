@@ -13,7 +13,7 @@ class CreateStokBarangTable extends Migration
      */
     public function up()
     {
-    Schema::create('stok_barang', function (Blueprint $table) {
+        Schema::create('stok_barang', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('barang_id');
             $table->string('kode')->unique();
@@ -21,6 +21,8 @@ class CreateStokBarangTable extends Migration
             $table->integer('stok')->default(0);
             $table->decimal('harga', 10, 2)->default(0);
             $table->string('satuan', 20);
+            $table->string('foto')->nullable();
+
             $table->timestamps();
 
             $table->foreign('barang_id')
@@ -36,6 +38,6 @@ class CreateStokBarangTable extends Migration
      */
     public function down()
     {
-    Schema::dropIfExists('stok_barang');
+        Schema::dropIfExists('stok_barang');
     }
 }

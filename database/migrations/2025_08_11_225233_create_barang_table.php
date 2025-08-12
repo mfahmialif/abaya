@@ -18,6 +18,7 @@ class CreateBarangTable extends Migration
             $table->string('kode_barang')->unique();
             $table->string('nama');
             $table->enum('kategori', ['mentah', 'jadi']);
+            $table->string('foto_barang')->nullable();
             $table->timestamps();
         });
     }

@@ -9,11 +9,13 @@
                     <tr>
                         <th>No</th>
                         <th>Kode</th>
+                        <th>Foto</th>
                         <th>Barang</th>
                         <th>Ukuran</th>
                         <th>Satuan</th>
                         <th>Harga</th>
                         <th>Stok</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -21,6 +23,7 @@
     </div>
 
 
+    @include('admin.barang-mentah.stok.edit')
 @endsection
 
 
@@ -31,6 +34,11 @@
             [{
                     data: "kode",
                     name: "kode",
+                    className: "align-middle",
+                },
+                {
+                    data: "foto",
+                    name: "foto",
                     className: "align-middle",
                 },
                 {
@@ -57,6 +65,13 @@
                     data: "stok",
                     name: "stok",
                     className: "align-middle",
+                },
+                {
+                    data: "action",
+                    name: "action",
+                    className: "align-middle",
+                    searchable: false,
+                    orderable: false,
                 },
             ]
         );
