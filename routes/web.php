@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BarangMentahController;
 use App\Http\Controllers\Admin\BarangMentahKeluarController;
 use App\Http\Controllers\Admin\BarangMentahMasukController;
 use App\Http\Controllers\Admin\BarangMentahStokController;
@@ -38,6 +39,11 @@ Route::get('/privacy_policy', [PrivacyPolicyController::class, 'index'])->name('
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::prefix('barang-mentah')->group(function () {
+        Route::get('/', [BarangMentahController::class, 'index'])->name('admin.barang-mentah.index');
+        Route::get('/data', [BarangMentahController::class, 'data'])->name('admin.barang-mentah.data');
+        Route::put('/update', [BarangMentahController::class, 'update'])->name('admin.barang-mentah.update');
+        Route::delete('/delete', [BarangMentahController::class, 'delete'])->name('admin.barang-mentah.delete');
+
         Route::prefix('stok')->group(function () {
             Route::get('/', [BarangMentahStokController::class, 'index'])->name('admin.barang-mentah.stok.index');
             Route::get('/data', [BarangMentahStokController::class, 'data'])->name('admin.barang-mentah.stok.data');

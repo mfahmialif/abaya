@@ -29,6 +29,12 @@
         <li class="menu-header small">
             <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
         </li>
+        <li class="menu-item {{ request()->routeIs('admin.barang-mentah') ? 'active' : '' }}">
+            <a href="{{ route('admin.barang-mentah.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons ti ti-package"></i>
+                <div data-i18n="Barang">Barang</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->routeIs('admin.barang-mentah.stok*') ? 'active' : '' }}">
             <a href="{{ route('admin.barang-mentah.stok.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons ti ti-package"></i>
