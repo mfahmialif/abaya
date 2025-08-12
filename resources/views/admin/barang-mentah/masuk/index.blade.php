@@ -2,7 +2,7 @@
 @section('title', 'Barang Mentah Masuk')
 @section('content')
 
-    {{-- @include('admin.barang-mentah.masuk.filter') --}}
+    @include('admin.barang-mentah.masuk.filter')
     <div class="card" id="card1">
         <div class="card-datatable table-responsive pt-0">
             <table class="datatables-basic table table-hover" id="table-1">
@@ -124,7 +124,7 @@
                     orderable: false,
                 },
             ],
-            // ['role_id', 'departemen_id']
+            ['tanggal_filter', 'tanggal_mulai', 'tanggal_selesai']
         );
 
         function initializeAutocomplete(inputSearch, offcanvasID) {
@@ -185,7 +185,6 @@
                 url: url,
                 dataType: "json",
                 success: function(response) {
-                    console.log(response)
                     if (!response.barang) {
                         showToastr('error', 'error', 'Barang Tidak ditemukan');
                         $(formId).find('[name="nama"]').attr('disabled', false);
@@ -229,7 +228,6 @@
                 type: "GET",
                 url: url,
                 success: function(response) {
-                    console.log(response);
                     $(formId).find('[name="ukuran"]').attr('disabled', true);
                     $(formId).find('[name="satuan"]').attr('disabled', true);
                     $(formId).find('[name="harga"]').attr('disabled', true);

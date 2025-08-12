@@ -25,6 +25,15 @@ class BarangMentahMasukController extends Controller
         $data   = BarangMasuk::join('stok_barang', 'barang_masuk.stok_barang_id', '=', 'stok_barang.id')
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->where('barang.kategori', 'mentah')
+            ->when($request->tanggal_mulai && !$request->tanggal_selesai, function ($query) use ($request) {
+                $query->where('barang_masuk.tanggal', '>=', $request->tanggal_mulai);
+            })
+            ->when(!$request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
+                $query->where('barang_masuk.tanggal', '<=', $request->tanggal_selesai);
+            })
+            ->when($request->tanggal_mulai && $request->tanggal_selesai, function ($query) use ($request) {
+                $query->whereBetween('barang_masuk.tanggal', [$request->tanggal_mulai, $request->tanggal_selesai]);
+            })
             ->select('barang_masuk.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'barang.nama', 'barang.kategori', 'stok_barang.kode', 'barang.kode_barang');
 
         return DataTables::of($data)
