@@ -36,7 +36,7 @@
 
             $('#form-new-record button[name="pencarian_btn"]').click(function(e) {
                 e.preventDefault();
-                search('#new-record', $('#new-record input[name="pencarian"]').val());
+                ukuran('#new-record', $('#new-record input[name="pencarian"]').val());
             });
 
             $('#form-new-record button[name="new_record_btn"]').click(function(e) {

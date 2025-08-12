@@ -80,7 +80,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 
 Route::prefix('operasi')->group(function () {
     Route::prefix('barang')->group(function () {
-        Route::get('/search/{kode}', [BarangController::class, 'search'])->name('operasi.barang.search');
+        Route::get('/ukuran/{kode}', [BarangController::class, 'ukuran'])->name('operasi.barang.ukuran');
         Route::get('/autocomplete/{kategori}/{query}', [BarangController::class, 'autocomplete'])->name('operasi.barang.autocomplete');
     });
 });

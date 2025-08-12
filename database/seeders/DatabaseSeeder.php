@@ -39,12 +39,14 @@ class DatabaseSeeder extends Seeder
 
         // Seeder untuk barang
         $barang1_id = DB::table('barang')->insertGetId([
+            'kode_barang'       => 'KK-1212',
             'nama'       => 'Kain Katun',
             'kategori'   => 'mentah',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
         $barang2_id = DB::table('barang')->insertGetId([
+            'kode_barang'       => 'AA-1212',
             'nama'       => 'Abaya Hitam',
             'kategori'   => 'jadi',
             'created_at' => now(),

@@ -1,6 +1,6 @@
 <div class="col-sm-12">
-    <button type="button" class="btn btn-primary w-100" name="new_record_btn"><i
-            class="ti ti-plus"></i> Tambah Barang Masuk</button>
+    <button type="button" class="btn btn-primary w-100" name="new_record_btn"><i class="ti ti-plus"></i> Tambah Barang
+        Masuk</button>
 </div>
 <div class="col-sm-12">
     <label class="form-label" for="pencarian">Pencarian Nama Barang</label>
@@ -11,6 +11,15 @@
             <i class="ti ti-search"></i>
         </button>
     </div>
+</div>
+<div class="col-sm-12">
+    <label class="form-label">Ukuran Barang: </label>
+    <select class="select2 form-select" name="ukuran_barang">
+        <option value="">Pilih ukuran barang</option>
+        <option value="a">Pilih ukuran barang</option>
+        <option value="aa">Pilih ukuran barang</option>
+
+    </select>
 </div>
 <div class="col-sm-12">
     <div class="row">
@@ -69,7 +78,7 @@
 <div class="col-sm-12">
     <label class="form-label" for="keterangan">Keterangan</label>
     <div class="input-group input-group-merge">
-        <textarea class="form-control" name="keterangan" placeholder="Isi keterangan / bisa dikosongi..." aria-label="Type here..."
-            aria-describedby="keterangan2" /></textarea>
+        <textarea class="form-control" name="keterangan" placeholder="Isi keterangan / bisa dikosongi..."
+            aria-label="Type here..." aria-describedby="keterangan2" /></textarea>
     </div>
 </div>
