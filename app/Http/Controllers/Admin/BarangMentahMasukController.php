@@ -2,16 +2,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\BulkData;
 use App\Http\Services\Helper;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Role;
 use App\Models\StokBarang;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
 class BarangMentahMasukController extends Controller
@@ -28,7 +25,7 @@ class BarangMentahMasukController extends Controller
         $data   = BarangMasuk::join('stok_barang', 'barang_masuk.stok_barang_id', '=', 'stok_barang.id')
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->where('barang.kategori', 'mentah')
-            ->select('barang_masuk.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'barang.nama', 'barang.kategori', 'stok_barang.kode');
+            ->select('barang_masuk.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'barang.nama', 'barang.kategori', 'stok_barang.kode', 'barang.kode_barang');
 
         return DataTables::of($data)
             ->filter(function ($query) use ($search, $request) {
@@ -63,6 +60,8 @@ class BarangMentahMasukController extends Controller
                                 <li>
                                     <button class="dropdown-item edit-record-button"
                                         data-id="' . $row->id . '"
+                                        data-kode_barang="' . $row->kode_barang . '"
+                                        data-kode="' . $row->kode . '"
                                         data-nama="' . $row->nama . '"
                                         data-ukuran="' . $row->ukuran . '"
                                         data-satuan="' . $row->satuan . '"
@@ -99,15 +98,21 @@ class BarangMentahMasukController extends Controller
         try {
             DB::beginTransaction();
             $rules = [
+                'barang_id'      => 'nullable|exists:barang,id',
                 'stok_barang_id' => 'nullable|exists:stok_barang,id',
                 'tanggal'        => 'required',
                 'jumlah'         => 'required',
                 'keterangan'     => 'nullable',
             ];
 
+            if (is_null($request->barang_id)) {
+                $rules = array_merge($rules, [
+                    'nama' => 'required',
+                ]);
+            }
+
             if (is_null($request->stok_barang_id)) {
                 $rules = array_merge($rules, [
-                    'nama'   => 'required',
                     'ukuran' => 'required',
                     'satuan' => 'required',
                     'harga'  => 'required',
@@ -116,14 +121,17 @@ class BarangMentahMasukController extends Controller
 
             $request->validate($rules);
 
-            $stokBarang = StokBarang::find($request->stok_barang_id);
-
-            if (! $stokBarang) {
+            $barang = Barang::find($request->barang_id);
+            if (! $barang) {
                 $barang = Barang::create([
-                    'nama'     => $request->nama,
-                    'kategori' => 'mentah',
+                    'kode_barang' => Helper::generateKodeBarang('mentah'),
+                    'nama'        => $request->nama,
+                    'kategori'    => 'mentah',
                 ]);
+            }
 
+            $stokBarang = StokBarang::find($request->stok_barang_id);
+            if (! $stokBarang) {
                 $stokBarang = StokBarang::create([
                     'barang_id' => $barang->id,
                     'kode'      => Helper::generateKode('mentah'),
@@ -172,10 +180,10 @@ class BarangMentahMasukController extends Controller
         try {
             DB::beginTransaction();
             $rules = [
-                'id'             => 'required|exists:barang_masuk,id',
-                'tanggal'        => 'required',
-                'jumlah'         => 'required',
-                'keterangan'     => 'nullable',
+                'id'         => 'required|exists:barang_masuk,id',
+                'tanggal'    => 'required',
+                'jumlah'     => 'required',
+                'keterangan' => 'nullable',
             ];
 
             $request->validate($rules);
@@ -183,9 +191,9 @@ class BarangMentahMasukController extends Controller
             $barangMasuk = BarangMasuk::findOrFail($request->id);
 
             $barangMasuk->update([
-                'tanggal'        => $request->tanggal,
-                'jumlah'         => $request->jumlah,
-                'keterangan'     => $request->keterangan,
+                'tanggal'    => $request->tanggal,
+                'jumlah'     => $request->jumlah,
+                'keterangan' => $request->keterangan,
             ]);
 
             Helper::updateStokBarang($barangMasuk->stok_barang_id);
@@ -222,14 +230,11 @@ class BarangMentahMasukController extends Controller
                 'id' => 'required',
             ]);
 
-            $data = User::findOrFail($request->id);
-            if ($data->photo) {
-                $path = public_path('photo/' . $data->photo);
-                if (file_exists($path)) {
-                    unlink($path);
-                }
-            }
-            $data->delete();
+            $barangMasuk = BarangMasuk::findOrFail($request->id);
+            $stokBarang  = $barangMasuk->stokBarang;
+
+            $barangMasuk->delete();
+            Helper::updateStokBarang($stokBarang->id);
 
             DB::commit();
             return [

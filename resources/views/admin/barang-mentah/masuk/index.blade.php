@@ -38,7 +38,6 @@
                     <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">
                         Close
                     </button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
@@ -161,21 +160,23 @@
         }
 
         function ukuran(formId, kode) {
-            // $(formId).find('input[name="stok_barang_id"]').val('');
+            $(formId).find('[name="nama"]').attr('disabled', true);
+            $(formId).find('[name="ukuran"]').attr('disabled', false);
+            $(formId).find('[name="satuan"]').attr('disabled', false);
+            $(formId).find('[name="harga"]').attr('disabled', false);
 
-            // $(formId).find('input[name="nama"]').attr('disabled', true);
-            // $(formId).find('input[name="ukuran"]').attr('disabled', true);
-            // $(formId).find('input[name="satuan"]').attr('disabled', true);
-            // $(formId).find('input[name="harga"]').attr('disabled', true);
+            $(formId).find('[name="barang_id"]').val('');
+            $(formId).find('[name="stok_barang_id"]').val('');
 
-            // $(formId).find('input[name="kode"]').val('');
-            // $(formId).find('input[name="nama"]').val('');
-            // $(formId).find('input[name="ukuran"]').val('');
-            // $(formId).find('input[name="satuan"]').val('');
-            // $(formId).find('input[name="harga"]').val('');
+            $(formId).find('[name="kode_barang"]').val('');
+            $(formId).find('[name="kode"]').val('');
+            $(formId).find('[name="nama"]').val('');
+            $(formId).find('[name="ukuran"]').val('');
+            $(formId).find('[name="satuan"]').val('');
+            $(formId).find('[name="harga"]').val('');
 
-            $(formId).find('select[name="ukuran_barang"]').empty();
-            $(formId).find('select[name="ukuran_barang"]').append(`<option value="">- Pilih Ukuran -</option>`);
+            $(formId).find('[name="ukuran_barang"]').empty();
+            $(formId).find('[name="ukuran_barang"]').append(`<option value="">- Pilih Ukuran -</option>`);
             var url =
                 "{{ route('operasi.barang.ukuran', ['kode' => 'kode']) }}";
             url = url.replace('kode', kode);
@@ -184,21 +185,69 @@
                 url: url,
                 dataType: "json",
                 success: function(response) {
+                    console.log(response)
+                    if (!response.barang) {
+                        showToastr('error', 'error', 'Barang Tidak ditemukan');
+                        $(formId).find('[name="nama"]').attr('disabled', false);
+                        $(formId).find('[name="nama"]').focus();
+                        return false;
+                    }
+                    $(formId).find('[name="barang_id"]').val(response.barang.id);
+                    $(formId).find('[name="nama"]').val(response.barang.nama);
+                    $(formId).find('[name="kode_barang"]').val(response.barang.kode_barang);
+
+                    if (response.stokBarang.length <= 0) {
+                        showToastr('error', 'error', 'Stok Barang Tidak Ditemukan');
+                        $(formId).find('[name="ukuran"]').focus();
+                        return false;
+                    }
                     let content = '';
-                    response.forEach(element => {
+                    response.stokBarang.forEach(element => {
                         content += `<option value="${element.id}">${element.nama} - ${element.ukuran}`
                     });
                     $(formId).find('select[name="ukuran_barang"]').append(content);
                     $(formId).find('select[name="ukuran_barang"]').focus();
                 },
                 error: function(response) {
-                    showToastr('error', 'error', 'Tidak ditemukan');
+                    showToastr('error', 'error', 'Barang Tidak ditemukan');
+                    $(formId).find('[name="nama"]').attr('disabled', false);
+                    $(formId).find('[name="nama"]').focus();
                 }
             });
         }
 
-        function initUkuran(){
+        function initSelectUkuranBarang(selectElement, formId) {
+            $(formId).find('[name="ukuran"]').attr('disabled', false);
+            $(formId).find('[name="satuan"]').attr('disabled', false);
+            $(formId).find('[name="harga"]').attr('disabled', false);
 
+            var stokBarangId = selectElement.val();
+            var url =
+                "{{ route('operasi.barang.stokBarang', ['stokBarangId' => 'stokBarangId']) }}";
+            url = url.replace('stokBarangId', stokBarangId);
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(response) {
+                    console.log(response);
+                    $(formId).find('[name="ukuran"]').attr('disabled', true);
+                    $(formId).find('[name="satuan"]').attr('disabled', true);
+                    $(formId).find('[name="harga"]').attr('disabled', true);
+
+                    $(formId).find('[name="stok_barang_id"]').val(response.id);
+                    $(formId).find('[name="kode"]').val(response.kode);
+                    $(formId).find('[name="ukuran"]').val(response.ukuran);
+                    $(formId).find('[name="satuan"]').val(response.satuan);
+                    $(formId).find('[name="harga"]').val(response.harga);
+
+                    $(formId).find('[name="jumlah"]').focus();
+
+                },
+                error: function(response) {
+                    showToastr('error', 'error', 'Barang Tidak ditemukan');
+                    $(formId).find('[name="ukuran"]').focus();
+                }
+            });
         }
     </script>
 @endpush

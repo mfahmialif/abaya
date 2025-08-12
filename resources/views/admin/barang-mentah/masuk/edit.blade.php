@@ -29,8 +29,16 @@
                 $('#form-edit-record [name="new_record_btn"]').attr('disabled', true);
                 $('#form-edit-record [name="pencarian"]').attr('disabled', true);
                 $('#form-edit-record [name="pencarian_btn"]').attr('disabled', true);
+                $('#form-edit-record [name="ukuran_barang"]').attr('disabled', true);
+                $('#form-edit-record .pencarian-container').css('display', 'none');
+
+                $('#form-edit-record [name="nama"]').attr('disabled', true);
+                $('#form-edit-record [name="ukuran"]').attr('disabled', true);
+                $('#form-edit-record [name="satuan"]').attr('disabled', true);
+                $('#form-edit-record [name="harga"]').attr('disabled', true);
 
                 const id = $(this).data('id');
+                const kode_barang = $(this).data('kode_barang');
                 const kode = $(this).data('kode');
                 const nama = $(this).data('nama');
                 const ukuran = $(this).data('ukuran');
@@ -42,6 +50,7 @@
 
                 $('#form-edit-record [name="id"]').val(id);
                 $('#form-edit-record [name="pencarian"]').val(kode);
+                $('#form-edit-record [name="kode_barang"]').val(kode_barang);
                 $('#form-edit-record [name="kode"]').val(kode);
                 $('#form-edit-record [name="nama"]').val(nama);
                 $('#form-edit-record [name="ukuran"]').val(ukuran);

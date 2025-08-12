@@ -449,6 +449,17 @@ class Helper
         ];
     }
 
+    public static function generateKodeBarang($kategori)
+    {
+        if ($kategori === 'mentah') {
+            return 'B-M-' . uniqid();
+        } elseif ($kategori === 'jadi') {
+            return 'B-J-' . uniqid();
+        }
+
+        return null; // atau bisa lempar exception kalau kategori tidak valid
+    }
+
     public static function generateKode($kategori)
     {
         if ($kategori === 'mentah') {

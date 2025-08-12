@@ -19,6 +19,13 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            initializeAutocomplete("#new-record input[name='pencarian']", "#new-record");
+
+            // Initialize autocomplete when the offcanvas is opened
+            $('#new-record').on('shown.bs.offcanvas', function() {
+                $('#form-new-record [name="pencarian"]').focus();
+            });
+
             var offCanvasNewRecord = new bootstrap.Offcanvas($('#new-record'));
 
             $(document).on('click', '#new-record-button', function() {
@@ -29,45 +36,38 @@
             // set tanggal sekarang
             $('#form-new-record [name="tanggal"]').val(new Date().toISOString().split('T')[0]);
 
-            // Initialize autocomplete when the offcanvas is opened
-            $('#new-record').on('shown.bs.offcanvas', function() {
-                initializeAutocomplete("#new-record input[name='pencarian']", "#new-record");
-            });
-
             $('#form-new-record button[name="pencarian_btn"]').click(function(e) {
                 e.preventDefault();
-                ukuran('#new-record', $('#new-record input[name="pencarian"]').val());
+                ukuran('#new-record', $('#new-record [name="pencarian"]').val());
             });
 
-            $('#form-new-record button[name="new_record_btn"]').click(function(e) {
+            $('#form-new-record [name="ukuran_barang"]').change(function(e) {
                 e.preventDefault();
-                $('#form-new-record').find('input[name="nama"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="ukuran"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="satuan"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="harga"]').attr('disabled', false);
-
-                $('#form-new-record').find('input[name="nama"]').focus();
+                initSelectUkuranBarang($(this), '#form-new-record');
             });
 
             $(document).on('submit', '#form-new-record', function(e) {
                 e.preventDefault();
                 ajaxRequestDt(e, offCanvasNewRecord, dataTable);
+                $('#form-new-record').find('[name="ukuran_barang"]').empty();
 
-                $('#form-new-record').find('input[name="nama"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="ukuran"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="satuan"]').attr('disabled', false);
-                $('#form-new-record').find('input[name="harga"]').attr('disabled', false);
+                $('#form-new-record').find('[name="nama"]').attr('disabled', true);
+                $('#form-new-record').find('[name="ukuran"]').attr('disabled', true);
+                $('#form-new-record').find('[name="satuan"]').attr('disabled', true);
+                $('#form-new-record').find('[name="harga"]').attr('disabled', true);
 
-                $('#form-new-record').find('input[name="pencarian"]').val('');
-                $('#form-new-record').find('input[name="stok_barang_id"]').val('');
-                $('#form-new-record').find('input[name="kode"]').val('');
-                $('#form-new-record').find('input[name="nama"]').val('');
-                $('#form-new-record').find('input[name="ukuran"]').val('');
-                $('#form-new-record').find('input[name="satuan"]').val('');
-                $('#form-new-record').find('input[name="harga"]').val('');
-                $('#form-new-record').find('input[name="jumlah"]').val('');
+                $('#form-new-record').find('[name="pencarian"]').val('');
+                $('#form-new-record').find('[name="barang_id"]').val('');
+                $('#form-new-record').find('[name="stok_barang_id"]').val('');
+                $('#form-new-record').find('[name="kode_barang"]').val('');
+                $('#form-new-record').find('[name="kode"]').val('');
+                $('#form-new-record').find('[name="nama"]').val('');
+                $('#form-new-record').find('[name="ukuran"]').val('');
+                $('#form-new-record').find('[name="satuan"]').val('');
+                $('#form-new-record').find('[name="harga"]').val('');
+                $('#form-new-record').find('[name="jumlah"]').val('');
                 $('#form-new-record [name="tanggal"]').val(new Date().toISOString().split('T')[0]);
-                $('#form-new-record').find('textarea[name="keterangan"]').val('');
+                $('#form-new-record').find('[name="keterangan"]').val('');
             });
         });
     </script>

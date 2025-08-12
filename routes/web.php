@@ -81,6 +81,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
 Route::prefix('operasi')->group(function () {
     Route::prefix('barang')->group(function () {
         Route::get('/ukuran/{kode}', [BarangController::class, 'ukuran'])->name('operasi.barang.ukuran');
+        Route::get('/stokBarang/{stokBarangId}', [BarangController::class, 'stokBarang'])->name('operasi.barang.stokBarang');
         Route::get('/autocomplete/{kategori}/{query}', [BarangController::class, 'autocomplete'])->name('operasi.barang.autocomplete');
     });
 });
