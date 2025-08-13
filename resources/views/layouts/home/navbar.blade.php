@@ -47,6 +47,14 @@
                       </li>
                       <li class="nav-item">
                           <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
+                              aria-current="page" href="{{ route('root.index') }}">Product</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
+                              aria-current="page" href="{{ route('root.index') }}">Contact</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
                               aria-current="page" href="{{ route('root.index') }}">Abaya</a>
                       </li>
                   </ul>
