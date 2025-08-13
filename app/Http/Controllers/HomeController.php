@@ -35,6 +35,6 @@ class HomeController extends Controller
                 return redirect()->route('admin.dashboard.index');
             }
         }
-        return view('home');
+        return redirect()->route('root.index');
     }
 }

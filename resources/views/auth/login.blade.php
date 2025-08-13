@@ -29,7 +29,7 @@
                                             fill="#7367F0" />
                                     </svg>
                                 </span>
-                                <span class="app-brand-text demo text-heading fw-bold">Vuexy</span>
+                                <span class="app-brand-text demo text-heading fw-bold">{{ config('app.name') }}</span>
                             </a>
                         </div>
                         <!-- /Logo -->
@@ -164,7 +164,8 @@
                                     `Processing...`;
 
                                 if (checkbox.checked) {
-                                    localStorage.setItem('username', document.getElementById('username').value);
+                                    localStorage.setItem('username', document
+                                        .getElementById('username').value);
                                 } else {
                                     localStorage.removeItem('username');
                                 }
