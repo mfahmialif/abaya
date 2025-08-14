@@ -72,6 +72,13 @@
                                             <button class="btn btn-sm btn-outline-secondary qty-plus btn-plus"
                                                 data-id="{{ $item->id }}">+</button>
                                         </div>
+                                        <select class="select2 form-select mt-3 stok-barang" style="text-align:center;">
+                                            <option value="">Pilih Ukuran</option>
+                                            @foreach ($item->stokBarang as $stokBarang)
+                                                <option value="{{ $stokBarang->id }}">{{ $stokBarang->ukuran }}</option>
+                                            @endforeach
+                                        </select>
+
                                         <!-- Button Beli -->
                                         <a href="javascript:void(0)" class="mt-2 btn btn-primary w-100 beli-btn"
                                             data-id="{{ $item->id }}">
@@ -362,8 +369,6 @@
         $(document).on('click', '.beli-btn', function(e) {
             e.preventDefault();
 
-            console.log('beli');
-
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -372,6 +377,7 @@
             let barang = $(this).data('id');
 
             let jml = $(this).closest('.card-body').find('.qty-input').val();
+            let stokBarangId = $(this).closest('.card-body').find('.stok-barang').val();
 
             let form = new FormData();
             form.append('barang_id', barang);
@@ -382,7 +388,7 @@
                 url: "{{ route('admin.beli.store') }}",
                 data: {
                     'jml': jml,
-                    'barang_id': barang,
+                    'stok_barang_id': stokBarangId,
                     '_token': $('meta[name="csrf-token"]').attr('content')
                 },
                 dataType: "json",
@@ -392,12 +398,11 @@
                 error: function(xhr) {
                     console.log(xhr)
                     if (xhr.status === 401) {
-                        window.location.href = '{{ route('login') }}'; 
+                        window.location.href = '{{ route('login') }}';
                     }
                 }
 
             });
-            console.log('selesai');
 
         });
     </script>

@@ -23,7 +23,7 @@ class BeliController extends Controller
             $request->validate(
                 [
                     'jml' => 'required',
-                    'barang_id' => 'required'
+                    'stok_barang_id' => 'required'
                 ]
             );
 
@@ -31,9 +31,8 @@ class BeliController extends Controller
             $tgl = $carbon->now()->format('Y-m-d');
 
             $jml = $request->jml;
-            $barang_id = $request->barang_id;
 
-            $stok = StokBarang::where('barang_id', $barang_id)->first();
+            $stok = StokBarang::findOrFail($request->stok_barang_id);
 
             if ($stok) {
                 $transaksi = new Transaksi();
