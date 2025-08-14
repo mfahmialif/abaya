@@ -8,11 +8,13 @@ use App\Http\Controllers\Admin\BarangMentahController;
 use App\Http\Controllers\Admin\BarangMentahKeluarController;
 use App\Http\Controllers\Admin\BarangMentahMasukController;
 use App\Http\Controllers\Admin\BarangMentahStokController;
+use App\Http\Controllers\Home\BeliController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TransaksiController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Home\ItemController;
 use App\Http\Controllers\Home\LandingPageController;
 use App\Http\Controllers\Operasi\BarangController;
 use Illuminate\Support\Facades\Auth;
@@ -128,6 +130,15 @@ Route::prefix('admin')->middleware(['auth', 'role:admin,jadi,mentah'])->group(fu
         Route::get('/', [ProfileController::class, 'index'])->name('admin.profile.index');
         Route::put('/update', [ProfileController::class, 'update'])->name('admin.profile.update');
     });
+});
+
+Route::prefix('pembelian')->middleware('auth')->group(function () {
+    Route::post('/', [BeliController::class, 'store'])->name('admin.beli.store');
+});
+
+Route::prefix('item')->middleware('auth')->group(function () {
+    Route::get('/', [ItemController::class, 'index'])->name('item.index');
+    Route::get('/data', [ItemController::class, 'data'])->name('item.data');
 });
 
 Route::prefix('operasi')->group(function () {

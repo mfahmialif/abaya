@@ -66,6 +66,7 @@
                 $('#form-new-record').find('[name="satuan"]').val('');
                 $('#form-new-record').find('[name="harga"]').val('');
                 $('#form-new-record').find('[name="jumlah"]').val('');
+                // $('#form-new-record').find('[name="foto"]').val('');
                 $('#form-new-record [name="tanggal"]').val(new Date().toISOString().split('T')[0]);
                 $('#form-new-record').find('[name="keterangan"]').val('');
             });

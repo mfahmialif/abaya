@@ -22,6 +22,7 @@ class TransaksiController extends Controller
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->join('users as pembeli', 'transaksi.pembeli_id', '=', 'pembeli.id')
             ->select('transaksi.*', 'barang.nama', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'stok_barang.foto', 'pembeli.name', 'pembeli.email', 'pembeli.jenis_kelamin', 'pembeli.photo');
+            
         return DataTables::of($data)
             ->filter(function ($query) use ($search, $request) {
                 $query->where(function ($query) use ($search) {

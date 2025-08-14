@@ -2,7 +2,6 @@
 @section('title', 'Landing Page')
 @section('content')
     <!-- Sections:Start -->
-
     <div data-bs-spy="scroll" class="scrollspy-example">
         <!-- Hero: Start -->
         <section id="hero-animation">
@@ -12,10 +11,11 @@
                 <div class="container">
                     <div class="hero-text-box text-center position-relative">
                         <h1 class="text-primary hero-title display-6 fw-extrabold">
-                           Abaya Elegan <br> Pesona Muslimah Sejati
+                            Abaya Elegan <br> Pesona Muslimah Sejati
                         </h1>
                         <h2 class="hero-sub-title h6 mb-6">
-                            Toko abaya yang menghadirkan busana muslimah elegan, nyaman, dan syar’i dengan desain modern. Cocok untuk aktivitas harian maupun acara spesial, membuat setiap langkah lebih anggun
+                            Toko abaya yang menghadirkan busana muslimah elegan, nyaman, dan syar’i dengan desain modern.
+                            Cocok untuk aktivitas harian maupun acara spesial, membuat setiap langkah lebih anggun
                         </h2>
                         <div class="landing-hero-btn d-inline-block position-relative">
                             {{-- <span class="hero-btn-item position-absolute d-none d-md-flex fw-medium">Join community
@@ -24,116 +24,75 @@
                             <a href="#landingPricing" class="btn btn-primary btn-lg">Get Started</a>
                         </div>
                     </div>
-<<<<<<< Updated upstream
-                    <div id="heroDashboardAnimation" class="hero-animation-img">
-                        <a href="../vertical-menu-template/app-ecommerce-dashboard.html">
-=======
                     {{-- <div id="heroDashboardAnimation" class="hero-animation-img">
-                        <a href="../vertical-menu-template/app-ecommerce-dashboard.html" target="_blank">
->>>>>>> Stashed changes
-                            <div id="heroAnimationImg" class="position-relative hero-dashboard-img">
-                                <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/hero-dashboard-light.png"
-                                    alt="hero dashboard" class="animation-img"
-                                    data-app-light-img="front-pages/landing-page/hero-dashboard-light.png"
-                                    data-app-dark-img="front-pages/landing-page/hero-dashboard-dark.png" />
-                                <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/hero-elements-light.png"
-                                    alt="hero elements"
-                                    class="position-absolute hero-elements-img animation-img top-0 start-0"
-                                    data-app-light-img="front-pages/landing-page/hero-elements-light.png"
-                                    data-app-dark-img="front-pages/landing-page/hero-elements-dark.png" />
-                            </div>
-                        </a>
-                    </div> --}}
+                        <a href="../vertical-menu-template/app-ecommerce-dashboard.html"> --}}
+
                 </div>
             </div>
             {{-- <div class="landing-hero-blank"></div> --}}
         </section>
 
-         <section id="landingTeam" class="section-py landing-team">
-            <div class="container">
-                <div class="text-center mb-4">
-                    <span class="badge bg-label-primary">Abaya Production</span>
-                </div>
-                <h4 class="text-center mb-1">
-                    <span class="position-relative fw-extrabold z-1">Product 
-                        <img src="{{ asset('admin') }}/assets/img/front-pages/icons/section-title-icon.png"
-                            alt="laptop charging"
-                            class="section-title-img position-absolute object-fit-contain bottom-0 z-n1" />
-                    </span>
-                    Abaya 
-                </h4>
-                <p class="text-center mb-md-11 pb-0 pb-xl-12">Yang banyak disukai orang</p>
-                <div class="row gy-12 mt-2">
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-2 shadow-none">
-                            <div
-                                class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
-                                <img c:\Users\msi12\Downloads\abaya2.png src="{{ asset('admin') }}/assets/img/front-pages/landing-page/abaya1.png"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-primary text-center">
-                                <h5 class="card-title mb-0">ABAYA HAREER</h5>
-                                <p class="text-muted mb-0">premium</p>
-                                <a href="javascript:void(0)" class="mt-2 btn btn-primary">Beli Sekarang</a>
-                            </div>
-                        </div>
+        <section id="product" class="section-py landing-team">
+            <form action="javascript:void(0)" method="post" id="formBeli">
+                @csrf
+                <div class="container">
+                    <div class="text-center mb-4">
+                        <span class="badge bg-label-primary">Abaya Production</span>
                     </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div
-                                class="bg-label-info border border-bottom-0 border-label-info position-relative team-image-box">
-                                <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/abaya2.png"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
+                    <h4 class="text-center mb-1">
+                        <span class="position-relative fw-extrabold z-1">Product
+                            <img src="{{ asset('admin') }}/assets/img/front-pages/icons/section-title-icon.png"
+                                alt="laptop charging"
+                                class="section-title-img position-absolute object-fit-contain bottom-0 z-n1" />
+                        </span>
+                        Abaya
+                    </h4>
+                    <p class="text-center mb-md-11 pb-0 pb-xl-12">Yang banyak disukai orang</p>
+                    <div class="row gy-12 mt-2">
+                        @foreach ($data as $item)
+                            <div class="col-lg-3 col-sm-6">
+                                <div class="card mt-3 mt-lg-2 shadow-none">
+                                    <div
+                                        class="bg-label-primary border border-bottom-0 border-label-primary position-relative team-image-box">
+                                        <img src="{{ asset('barang/' . $item->foto_barang) }}"
+                                            class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
+                                            alt="{{ $item->nama }}" />
+                                    </div>
+                                    <div class="card-body border border-top-0 border-label-primary text-center">
+                                        <h5 class="card-title mb-0">{{ $item->nama }}</h5>
+                                        <p class="text-muted mb-0">Premium</p>
+
+                                        <!-- Quantity Input -->
+                                        <div class="d-flex justify-content-center align-items-center mt-2">
+                                            <button class="btn btn-sm btn-outline-secondary qty-minus btn-minus"
+                                                data-id="{{ $item->id }}">-</button>
+                                            <input type="number" class="form-control mx-1 text-center qty-input jml"
+                                                name="jml" value="1" min="1" style="width: 50px;"
+                                                data-id="{{ $item->id }}">
+                                            <button class="btn btn-sm btn-outline-secondary qty-plus btn-plus"
+                                                data-id="{{ $item->id }}">+</button>
+                                        </div>
+                                        <!-- Button Beli -->
+                                        <a href="javascript:void(0)" class="mt-2 btn btn-primary w-100 beli-btn"
+                                            data-id="{{ $item->id }}">
+                                            Beli Sekarang
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body border border-top-0 border-label-info text-center">
-                                <h5 class="card-title mb-0">ABAYA FURSAN</h5>
-                                <p class="text-muted mb-0">premium</p>
-                                <a href="javascript:void(0)" class="mt-2 btn btn-primary">Beli Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div
-                                class="bg-label-danger border border-bottom-0 border-label-danger position-relative team-image-box">
-                                <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/abaya3.png"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-danger text-center">
-                                <h5 class="card-title mb-0">ABAYA NIDA</h5>
-                                <p class="text-muted mb-0">premium</p>
-                                <a href="javascript:void(0)" class="mt-2 btn btn-primary">Beli Sekarang</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="card mt-3 mt-lg-0 shadow-none">
-                            <div
-                                class="bg-label-success border border-bottom-0 border-label-success position-relative team-image-box">
-                                <img src="{{ asset('admin') }}/assets/img/front-pages/landing-page/abaya4.png"
-                                    class="position-absolute card-img-position bottom-0 start-50 scaleX-n1-rtl"
-                                    alt="human image" />
-                            </div>
-                            <div class="card-body border border-top-0 border-label-success text-center">
-                                <h5 class="card-title mb-0">ABAYA MALIKY</h5>
-                                <p class="text-muted mb-0">premium</p>
-                                <a href="javascript:void(0)" class="mt-2 btn btn-primary">Beli Sekarang</a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            </form>
         </section>
+
         <section id="landingFAQ" class="section-py bg-body landing-faq">
             <div class="container">
                 <div class="text-center mb-4">
                     <span class="badge bg-label-primary">FAQ</span>
                 </div>
                 <h4 class="text-center mb-1">
-                   Pertanyaan yang Sering 
+                    Pertanyaan yang Sering
                     <span class="position-relative fw-extrabold z-1">Diajukan
                         <img src="{{ asset('admin') }}/assets/img/front-pages/icons/section-title-icon.png"
                             alt="laptop charging"
@@ -141,7 +100,7 @@
                     </span>
                 </h4>
                 <p class="text-center mb-12 pb-md-4">
-                   Lihat daftar FAQ ini untuk menemukan jawaban dari pertanyaan umum.
+                    Lihat daftar FAQ ini untuk menemukan jawaban dari pertanyaan umum.
                 </p>
                 <div class="row gy-12 align-items-center">
                     <div class="col-lg-5">
@@ -156,29 +115,30 @@
                                 <h2 class="accordion-header" id="headingOne">
                                     <button type="button" class="accordion-button" data-bs-toggle="collapse"
                                         data-bs-target="#accordionOne" aria-expanded="true" aria-controls="accordionOne">
-                                       Apakah semua abaya di toko ini asli dari Saudi Arabia?
+                                        Apakah semua abaya di toko ini asli dari Saudi Arabia?
                                     </button>
                                 </h2>
 
                                 <div id="accordionOne" class="accordion-collapse collapse"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Ya, semua abaya yang kami jual merupakan produk original yang diimpor langsung dari Saudi Arabia, dengan kualitas bahan premium.
+                                        Ya, semua abaya yang kami jual merupakan produk original yang diimpor langsung dari
+                                        Saudi Arabia, dengan kualitas bahan premium.
                                     </div>
                                 </div>
                             </div>
                             <div class="card accordion-item">
                                 <h2 class="accordion-header" id="headingTwo">
                                     <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
-                                        data-bs-target="#accordionTwo" aria-expanded="false"
-                                        aria-controls="accordionTwo">
-                                         Apakah tersedia berbagai merek (brand) abaya?
+                                        data-bs-target="#accordionTwo" aria-expanded="false" aria-controls="accordionTwo">
+                                        Apakah tersedia berbagai merek (brand) abaya?
                                     </button>
                                 </h2>
                                 <div id="accordionTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Tentu, kami menyediakan berbagai merek abaya branded ternama dari Saudi Arabia, sehingga pelanggan dapat memilih sesuai selera dan kebutuhan.
+                                        Tentu, kami menyediakan berbagai merek abaya branded ternama dari Saudi Arabia,
+                                        sehingga pelanggan dapat memilih sesuai selera dan kebutuhan.
                                     </div>
                                 </div>
                             </div>
@@ -193,7 +153,8 @@
                                 <div id="accordionThree" class="accordion-collapse collapse show"
                                     aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Ya, kami menyediakan ukuran mulai dari S hingga XXL. Untuk memastikan ukuran sesuai, silakan cek panduan ukuran yang tersedia di setiap produk.
+                                        Ya, kami menyediakan ukuran mulai dari S hingga XXL. Untuk memastikan ukuran sesuai,
+                                        silakan cek panduan ukuran yang tersedia di setiap produk.
                                     </div>
                                 </div>
                             </div>
@@ -202,13 +163,14 @@
                                     <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
                                         data-bs-target="#accordionFour" aria-expanded="false"
                                         aria-controls="accordionFour">
-                                       Apakah bisa memesan abaya custom?
+                                        Apakah bisa memesan abaya custom?
                                     </button>
                                 </h2>
                                 <div id="accordionFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                       Untuk saat ini, kami menjual abaya ready stock. Namun, beberapa brand menyediakan layanan pre-order dengan model dan ukuran tertentu.
+                                        Untuk saat ini, kami menjual abaya ready stock. Namun, beberapa brand menyediakan
+                                        layanan pre-order dengan model dan ukuran tertentu.
                                     </div>
                                 </div>
                             </div>
@@ -217,13 +179,14 @@
                                     <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse"
                                         data-bs-target="#accordionFive" aria-expanded="false"
                                         aria-controls="accordionFive">
-                                       Bagaimana jika produk yang diterima tidak sesuai?
+                                        Bagaimana jika produk yang diterima tidak sesuai?
                                     </button>
                                 </h2>
                                 <div id="accordionFive" class="accordion-collapse collapse" aria-labelledby="headingFive"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        Kami memiliki kebijakan retur/penukaran dalam waktu 3 hari setelah barang diterima, selama produk belum digunakan dan label masih terpasang.
+                                        Kami memiliki kebijakan retur/penukaran dalam waktu 3 hari setelah barang diterima,
+                                        selama produk belum digunakan dan label masih terpasang.
                                     </div>
                                 </div>
                             </div>
@@ -314,7 +277,8 @@
                             <div class="card-body">
                                 <h4 class="mb-2">Kirim Pesan</h4>
                                 <p class="mb-6">
-                                   Jika Anda ingin membahas hal terkait pembayaran, akun, kerja sama, atau memiliki pertanyaan sebelum pembelian, Anda berada di tempat yang tepat.
+                                    Jika Anda ingin membahas hal terkait pembayaran, akun, kerja sama, atau memiliki
+                                    pertanyaan sebelum pembelian, Anda berada di tempat yang tepat.
                                 </p>
                                 <form>
                                     <div class="row g-4">
@@ -348,3 +312,93 @@
 
     <!-- / Sections:End -->
 @endsection
+@push('scripts')
+    <script>
+        $(document).on('click', '.btn-plus', function() {
+            let jml = $(".jml").val();
+
+            let j = parseInt(jml);
+
+            let btnMinus = $(this).closest(".card-body").find(".btn-minus");
+
+            if (j <= 1) {
+                btnMinus.prop("disabled", true);
+            } else {
+                btnMinus.prop("disabled", false);
+            }
+
+            let total = j + 1;
+
+            $(".jml").val(total);
+
+
+        });
+        $(document).on('click', '.btn-minus', function() {
+            let jml = $(".jml").val();
+            let j = parseInt(jml);
+            let btnMinus = $(this).closest(".card-body").find(".btn-minus");
+
+            if (j <= 2) {
+                btnMinus.prop("disabled", true);
+            } else {
+                btnMinus.prop("disabled", false);
+            }
+            let total = j - 1;
+
+            $(".jml").val(total);
+
+
+        });
+
+        $(document).ready(function() {
+            $(document).on('input', '.qty-input', function() {
+                console.log("Event input terpanggil");
+                let jml = $(this).val();
+                let j = parseInt(jml);
+                console.log(j);
+            });
+        });
+
+        $(document).on('click', '.beli-btn', function(e) {
+            e.preventDefault();
+
+            console.log('beli');
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            let barang = $(this).data('id');
+
+            let jml = $(this).closest('.card-body').find('.qty-input').val();
+
+            let form = new FormData();
+            form.append('barang_id', barang);
+            form.append('jml', jml);
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('admin.beli.store') }}",
+                data: {
+                    'jml': jml,
+                    'barang_id': barang,
+                    '_token': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "json",
+                success: function(response) {
+                    showToastr(response.code, response.code, response.message);
+                },
+                error: function(xhr) {
+                    console.log(xhr)
+                    if (xhr.status === 401) {
+                        window.location.href = '{{ route('login') }}'; 
+                    }
+                }
+
+            });
+            console.log('selesai');
+
+        });
+    </script>
+@endpush

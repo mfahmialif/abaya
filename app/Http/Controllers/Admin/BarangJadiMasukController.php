@@ -110,6 +110,7 @@ class BarangJadiMasukController extends Controller
                 'tanggal'        => 'required',
                 'jumlah'         => 'required',
                 'keterangan'     => 'nullable',
+                'foto'           => 'nullable'
             ];
 
             if (is_null($request->barang_id)) {

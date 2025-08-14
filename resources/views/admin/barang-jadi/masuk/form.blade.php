@@ -64,6 +64,13 @@
         </div>
     </div>
 </div>
+{{-- <div class="col-sm-12">
+    <label class="form-label" for="foto">Foto</label>
+    <div class="input-group input-group-merge">
+        <input type="file" class="form-control" name="jumlah" placeholder="foto" aria-label="Type here..."
+            aria-describedby="foto" required />
+    </div>
+</div> --}}
 <div class="col-sm-12">
     <label class="form-label" for="jumlah">Jumlah</label>
     <div class="input-group input-group-merge">

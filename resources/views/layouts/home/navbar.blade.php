@@ -42,21 +42,23 @@
                   </button>
                   <ul class="navbar-nav me-auto">
                       <li class="nav-item">
-                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
-                              aria-current="page" href="{{ route('root.index') }}">Home</a>
+                          <a class="nav-link fw-medium" aria-current="page" href="{{ route('root.index') }}">Home</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
-                              aria-current="page" href="{{ route('root.index') }}">Product</a>
+                          <a class="nav-link fw-medium" aria-current="page" href="#product">Product</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
-                              aria-current="page" href="{{ route('root.index') }}">Contact</a>
+                          <a class="nav-link fw-medium" aria-current="page" href="#landingFAQ">FAQ</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link fw-medium {{ request()->routeIs('root.index*') ? 'active' : '' }}"
-                              aria-current="page" href="{{ route('root.index') }}">Abaya</a>
+                          <a class="nav-link fw-medium" aria-current="page" href="#landingCTA">Contact</a>
                       </li>
+                      @if (Auth::check())
+                          <li class="nav-item">
+                              <a class="nav-link fw-medium" aria-current="page"
+                                  href="{{ route('item.index') }}">Item</a>
+                          </li>
+                      @endif
                   </ul>
               </div>
               <div class="landing-menu-overlay d-lg-none"></div>

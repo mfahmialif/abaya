@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Services;
 
 use App\Models\Tahun;
@@ -15,13 +16,12 @@ class Helper
         $idrString = preg_replace("/[^0-9]/", "", $idrString);
 
         // Convert the string to a double
-        $idrDecimal = (double) $idrString;
+        $idrDecimal = (float) $idrString;
         return $idrDecimal;
     }
     public static function doubleToIdr($idrString)
     {
         return 'Rp ' . number_format($idrString, 0, ',', '.');
-
     }
 
     public static function terbilang($nilai)
@@ -120,7 +120,6 @@ class Helper
                 if ($key !== false) {
                     unset($enum[$key]);
                 }
-
             }
             $enum = array_values($enum);
         }
@@ -471,8 +470,13 @@ class Helper
 
         return null; // atau bisa lempar exception kalau kategori tidak valid
     }
+    public static function generateTransaksi()
+    {
+        return 'TRX-' . uniqid();
+    }
 
-    public static function updateStokBarang($stokBarangId){
+    public static function updateStokBarang($stokBarangId)
+    {
         $stokMasuk = BarangMasuk::where('stok_barang_id', $stokBarangId)->sum('jumlah');
         $stokKeluar = BarangKeluar::where('stok_barang_id', $stokBarangId)->sum('jumlah');
         $transaksi = Transaksi::where('stok_barang_id', $stokBarangId)->where('status', 'selesai')->sum('jumlah');
