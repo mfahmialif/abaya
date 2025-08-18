@@ -6,10 +6,10 @@
                 <script>
                     document.write(new Date().getFullYear());
                 </script>
-                , made with ❤️ by <a href="#" class="footer-link">Absensi App</a>
+                , made with ❤️ by <a href="#" class="footer-link">{{ config('app.name') }} App</a>
             </div>
             <div class="d-none d-lg-inline-block">
-                <a href="#" class="footer-link me-4">Absensi App</a>
+                <a href="#" class="footer-link me-4">{{ config('app.name') }} App</a>
             </div>
         </div>
     </div>

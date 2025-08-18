@@ -3,47 +3,93 @@
     {
       "name": "Dashboards",
       "icon": "ti-smart-home",
-      "url": "admin/dashboard"
+      "url": "/admin/dashboard"
+    },
+
+    { "type": "header", "name": "Barang Mentah", "roles": ["admin", "mentah"] },
+    {
+      "name": "Barang",
+      "icon": "ti-package",
+      "url": "/admin/barang-mentah",
+      "roles": ["admin", "mentah"]
     },
     {
-      "name": "Category",
-      "icon": "ti-folder",
-      "url": "/admin/category"
+      "name": "Stok",
+      "icon": "ti-list-check",
+      "url": "/admin/barang-mentah/stok",
+      "roles": ["admin", "mentah"]
     },
     {
-      "name": "News",
-      "icon": "ti-files",
-      "url": "/admin/news"
+      "name": "Masuk",
+      "icon": "ti-arrow-bar-to-right",
+      "url": "/admin/barang-mentah/masuk",
+      "roles": ["admin", "mentah"]
     },
     {
-      "name": "Player",
+      "name": "Keluar",
+      "icon": "ti-arrow-bar-to-left",
+      "url": "/admin/barang-mentah/keluar",
+      "roles": ["admin", "mentah"]
+    },
+
+    { "type": "header", "name": "Barang Jadi", "roles": ["admin", "jadi"] },
+    {
+      "name": "Barang",
+      "icon": "ti-package",
+      "url": "/admin/barang-jadi",
+      "roles": ["admin", "jadi"]
+    },
+    {
+      "name": "Stok",
+      "icon": "ti-list-check",
+      "url": "/admin/barang-jadi/stok",
+      "roles": ["admin", "jadi"]
+    },
+    {
+      "name": "Masuk",
+      "icon": "ti-arrow-bar-to-right",
+      "url": "/admin/barang-jadi/masuk",
+      "roles": ["admin", "jadi"]
+    },
+    {
+      "name": "Keluar",
+      "icon": "ti-arrow-bar-to-left",
+      "url": "/admin/barang-jadi/keluar",
+      "roles": ["admin", "jadi"]
+    },
+
+    { "type": "header", "name": "Penjualan", "roles": ["admin"] },
+    {
+      "name": "Transaksi",
+      "icon": "ti-shopping-cart",
+      "url": "/admin/transaksi",
+      "roles": ["admin"]
+    },
+
+    { "type": "header", "name": "Setting" },
+    {
+      "name": "Users",
       "icon": "ti-user",
-      "url": "/admin/player"
+      "url": "/admin/user",
+      "roles": ["admin"]
     },
     {
-      "name": "Typing Level",
-      "icon": "ti-list",
-      "url": "/admin/typing-level"
+      "name": "Role",
+      "icon": "ti-key",
+      "url": "/admin/role",
+      "roles": ["admin"]
     },
-    {
-      "name": "Content",
-      "icon": "ti-keyboard",
-      "url": "/admin/typing"
-    },
-    {
-      "name": "Score",
-      "icon": "ti-award",
-      "url": "/admin/typing-score"
-    },
-    {
-      "name": "User",
-      "icon": "ti-user",
-      "url": "/admin/user"
-    },
+
     {
       "name": "Profile",
-      "icon": "ti-id-badge",
+      "icon": "ti-settings",
       "url": "/admin/profile"
+    },
+    {
+      "name": "Logout",
+      "icon": "ti-logout",
+      "url": "/logout",
+      "method": "POST"
     }
   ],
   "files": [],

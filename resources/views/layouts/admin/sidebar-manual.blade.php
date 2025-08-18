@@ -25,7 +25,7 @@
             </a>
         </li>
 
-        @if (Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'mentah')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'mentah')
             <!-- Barang Mentah-->
             <li class="menu-header small">
                 <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
@@ -56,7 +56,7 @@
             </li>
         @endif
 
-        @if (Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'jadi')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'jadi')
             <!-- Barang Jadi-->
             <li class="menu-header small">
                 <span class="menu-header-text" data-i18n="Barang Jadi">Barang Jadi</span>
@@ -87,7 +87,7 @@
             </li>
         @endif
 
-        @if (Auth::user()->role->akses == 'admin')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir')
             <!-- Penjualan-->
             <li class="menu-header small">
                 <span class="menu-header-text" data-i18n="Penjualan">Penjualan</span>
@@ -105,7 +105,7 @@
             <span class="menu-header-text" data-i18n="Setting">Setting</span>
         </li>
 
-        @if (Auth::user()->role->akses == 'admin')
+        @if (Auth::user()->role->akses == 'owner')
             <!-- Users -->
             <li class="menu-item {{ request()->routeIs('admin.user*') ? 'active' : '' }}">
                 <a href="{{ route('admin.user.index') }}" class="menu-link">
