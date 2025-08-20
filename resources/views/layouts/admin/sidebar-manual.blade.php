@@ -25,10 +25,10 @@
             </a>
         </li>
 
-        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'mentah')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'admin gudang')
             <!-- Barang Mentah-->
             <li class="menu-header small">
-                <span class="menu-header-text" data-i18n="Barang Mentah">Barang Mentah</span>
+                <span class="menu-header-text" data-i18n="Stok Barang Mentah">Stok Barang Mentah</span>
             </li>
             <li class="menu-item {{ request()->routeIs('admin.barang-mentah.index') ? 'active' : '' }}">
                 <a href="{{ route('admin.barang-mentah.index') }}" class="menu-link">
@@ -56,7 +56,7 @@
             </li>
         @endif
 
-        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'jadi')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'kasir' || Auth::user()->role->akses == 'admin jadi')
             <!-- Barang Jadi-->
             <li class="menu-header small">
                 <span class="menu-header-text" data-i18n="Barang Jadi">Barang Jadi</span>
@@ -87,7 +87,7 @@
             </li>
         @endif
 
-        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'kasir')
+        @if (Auth::user()->role->akses == 'owner' || Auth::user()->role->akses == 'admin' || Auth::user()->role->akses == 'kasir')
             <!-- Penjualan-->
             <li class="menu-header small">
                 <span class="menu-header-text" data-i18n="Penjualan">Penjualan</span>
@@ -105,7 +105,7 @@
             <span class="menu-header-text" data-i18n="Setting">Setting</span>
         </li>
 
-        @if (Auth::user()->role->akses == 'owner')
+        @if (Auth::user()->role->akses == 'admin')
             <!-- Users -->
             <li class="menu-item {{ request()->routeIs('admin.user*') ? 'active' : '' }}">
                 <a href="{{ route('admin.user.index') }}" class="menu-link">

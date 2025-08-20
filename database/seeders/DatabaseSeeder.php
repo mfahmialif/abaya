@@ -25,16 +25,19 @@ class DatabaseSeeder extends Seeder
             'akses' => 'owner',
         ]);
         DB::table('role')->insert([
-            'akses' => 'user',
+            'akses' => 'pelanggan',
         ]);
         DB::table('role')->insert([
-            'akses' => 'jadi',
+            'akses' => 'admin jadi',
         ]);
         DB::table('role')->insert([
-            'akses' => 'mentah',
+            'akses' => 'admin gudang',
         ]);
         DB::table('role')->insert([
             'akses' => 'kasir',
+        ]);
+        DB::table('role')->insert([
+            'akses' => 'admin',
         ]);
         DB::table('users')->insert([
             'email'         => 'owner@example.com',
@@ -45,34 +48,34 @@ class DatabaseSeeder extends Seeder
             'jenis_kelamin' => '*',
         ]);
         DB::table('users')->insert([
-            'email'         => 'user@example.com',
-            'username'      => 'user',
+            'email'         => 'pelanggan@example.com',
+            'username'      => 'pelanggan',
             'name'          => 'User',
-            'password'      => bcrypt('user'),
+            'password'      => bcrypt('pelanggan'),
             'role_id'       => 2,
             'jenis_kelamin' => 'Laki-laki',
         ]);
         DB::table('users')->insert([
-            'email'         => 'user2@example.com',
-            'username'      => 'user2',
+            'email'         => 'pelanggan2@example.com',
+            'username'      => 'pelanggan2',
             'name'          => 'User 2',
-            'password'      => bcrypt('user2'),
+            'password'      => bcrypt('pelanggan2'),
             'role_id'       => 2,
             'jenis_kelamin' => 'Laki-laki',
         ]);
         DB::table('users')->insert([
             'email'         => 'jadi@example.com',
             'username'      => 'jadi',
-            'name'          => 'Jadi',
+            'name'          => 'Admin Barang Jadi',
             'password'      => bcrypt('jadi'),
             'role_id'       => 3,
             'jenis_kelamin' => 'Laki-laki',
         ]);
         DB::table('users')->insert([
-            'email'         => 'mentah@example.com',
-            'username'      => 'mentah',
-            'name'          => 'Mentah',
-            'password'      => bcrypt('mentah'),
+            'email'         => 'gudang@example.com',
+            'username'      => 'gudang',
+            'name'          => 'Admin Gudang',
+            'password'      => bcrypt('gudang'),
             'role_id'       => 4,
             'jenis_kelamin' => 'Laki-laki',
         ]);
@@ -82,6 +85,14 @@ class DatabaseSeeder extends Seeder
             'name'          => 'Kasir',
             'password'      => bcrypt('kasir'),
             'role_id'       => 5,
+            'jenis_kelamin' => 'Laki-laki',
+        ]);
+        DB::table('users')->insert([
+            'email'         => 'admin@example.com',
+            'username'      => 'admin',
+            'name'          => 'Admin',
+            'password'      => bcrypt('admin'),
+            'role_id'       => 6,
             'jenis_kelamin' => 'Laki-laki',
         ]);
 
@@ -242,7 +253,7 @@ class DatabaseSeeder extends Seeder
             'pembeli_id'     => 3,
             'stok_barang_id' => $stok1_id,
             'jumlah'         => 2,
-            'tanggal'        => now()->subDays(1)->toDateString(),
+            'tanggal'        => now()->addMonths(1),
             'total_harga'    => 100000,
             'status'         => 'selesai',
             'created_at'     => now(),

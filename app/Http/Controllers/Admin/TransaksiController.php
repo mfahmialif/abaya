@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Services\Helper;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Services\Helper;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -22,7 +23,7 @@ class TransaksiController extends Controller
             ->join('barang', 'stok_barang.barang_id', '=', 'barang.id')
             ->join('users as pembeli', 'transaksi.pembeli_id', '=', 'pembeli.id')
             ->select('transaksi.*', 'barang.nama', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'stok_barang.foto', 'pembeli.name', 'pembeli.email', 'pembeli.jenis_kelamin', 'pembeli.photo');
-            
+
         return DataTables::of($data)
             ->filter(function ($query) use ($search, $request) {
                 $query->where(function ($query) use ($search) {
@@ -75,6 +76,9 @@ class TransaksiController extends Controller
                 return '<span class="badge bg-label-' . ($row->status == 'proses' ? 'warning' : 'success') . '">' . $row->status . '</span>';
             })
             ->addColumn('action', function ($row) {
+                if (Auth::user()->role->akses === 'owner') {
+                    return '<span class="badge bg-label-secondary">Tidak ada aksi</span>';
+                }
                 $actionButtons = '
                         <div class="d-inline-block">
                             <a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

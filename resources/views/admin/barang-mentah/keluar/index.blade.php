@@ -94,7 +94,8 @@
     </script>
 
     <script>
-        var dataTable = initDataTables('table-1', 'loader-user', 'card1', 'new-record-button', false,
+        let add = '{{ Auth::user()->role->akses }}' === 'owner' ? false : 'new-record-button';
+        var dataTable = initDataTables('table-1', 'loader-user', 'card1', add, false,
             'Barang Mentah Keluar', "{{ route('admin.barang-mentah.keluar.data') }}",
             [{
                     data: "nama",

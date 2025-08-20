@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Services\Helper;
 use App\Models\Barang;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Services\Helper;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class BarangMentahController extends Controller
 {
@@ -44,6 +45,9 @@ class BarangMentahController extends Controller
                 return '<a href="' . $foto_barang . '" data-fancybox="gallery" data-caption="' . $row->kode . '"><img src="' . $foto_barang . '" alt="Foto_barang" class="img-fluid"></a>';
             })
             ->addColumn('action', function ($row) {
+                if (Auth::user()->role->akses === 'owner') {
+                    return '<span class="badge bg-label-secondary">Tidak ada aksi</span>';
+                }
                 $actionButtons = '
                         <div class="d-inline-block">
                             <a href="javascript:;" class="btn btn-sm btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown">

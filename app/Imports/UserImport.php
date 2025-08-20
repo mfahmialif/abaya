@@ -36,7 +36,7 @@ class UserImport implements ToCollection
 
         $max = $collection->count() - $initIndex;
 
-        $roleId = Role::where('akses', 'user')->value('id');
+        $roleId = Role::where('akses', 'pelanggan')->value('id');
 
         $error = 0;
         $success = 0;

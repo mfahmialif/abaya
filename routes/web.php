@@ -42,12 +42,12 @@ Route::get('/beranda', [App\Http\Controllers\HomeController::class, 'index'])->n
 
 Route::get('/', [LandingPageController::class, 'index'])->name('root.index');
 
-Route::prefix('admin')->middleware(['auth', 'role:owner,jadi,mentah,kasir'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'role:owner,admin jadi,admin gudang,kasir,admin'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard.index');
     });
 
-    Route::prefix('barang-mentah')->middleware('role:owner,mentah,kasir')->group(function () {
+    Route::prefix('barang-mentah')->middleware('role:owner,admin gudang,kasir,admin')->group(function () {
         Route::get('/', [BarangMentahController::class, 'index'])->name('admin.barang-mentah.index');
         Route::get('/data', [BarangMentahController::class, 'data'])->name('admin.barang-mentah.data');
         Route::put('/update', [BarangMentahController::class, 'update'])->name('admin.barang-mentah.update');
@@ -75,7 +75,7 @@ Route::prefix('admin')->middleware(['auth', 'role:owner,jadi,mentah,kasir'])->gr
         });
     });
 
-    Route::prefix('barang-jadi')->middleware('role:owner,jadi,kasir')->group(function () {
+    Route::prefix('barang-jadi')->middleware('role:owner,admin jadi,kasir,admin')->group(function () {
         Route::get('/', [BarangJadiController::class, 'index'])->name('admin.barang-jadi.index');
         Route::get('/data', [BarangJadiController::class, 'data'])->name('admin.barang-jadi.data');
         Route::put('/update', [BarangJadiController::class, 'update'])->name('admin.barang-jadi.update');
@@ -103,14 +103,14 @@ Route::prefix('admin')->middleware(['auth', 'role:owner,jadi,mentah,kasir'])->gr
         });
     });
 
-    Route::prefix('transaksi')->middleware('role:owner,kasir')->group(function () {
+    Route::prefix('transaksi')->middleware('role:owner,kasir,admin')->group(function () {
         Route::get('/', [TransaksiController::class, 'index'])->name('admin.transaksi.index');
         Route::get('/data', [TransaksiController::class, 'data'])->name('admin.transaksi.data');
         Route::put('/updateStatus', [TransaksiController::class, 'updateStatus'])->name('admin.transaksi.updateStatus');
         Route::delete('/delete', [TransaksiController::class, 'delete'])->name('admin.transaksi.delete');
     });
 
-    Route::prefix('role')->middleware('role:owner')->group(function () {
+    Route::prefix('role')->middleware('role:admin')->group(function () {
         Route::get('/', [RoleController::class, 'index'])->name('admin.role.index');
         Route::get('/data', [RoleController::class, 'data'])->name('admin.role.data');
         Route::post('/store', [RoleController::class, 'store'])->name('admin.role.store');
@@ -118,7 +118,7 @@ Route::prefix('admin')->middleware(['auth', 'role:owner,jadi,mentah,kasir'])->gr
         Route::delete('/delete', [RoleController::class, 'delete'])->name('admin.role.delete');
     });
 
-    Route::prefix('user')->middleware('role:owner')->group(function () {
+    Route::prefix('user')->middleware('role:admin')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('admin.user.index');
         Route::get('/data', [UserController::class, 'data'])->name('admin.user.data');
         Route::post('/store', [UserController::class, 'store'])->name('admin.user.store');

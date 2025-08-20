@@ -28,13 +28,16 @@ class HomeController extends Controller
             if (Auth::user()->role->akses == 'owner') {
                 return redirect()->route('admin.dashboard.index');
             }
-            if (Auth::user()->role->akses == 'jadi') {
+            if (Auth::user()->role->akses == 'admin jadi') {
                 return redirect()->route('admin.dashboard.index');
             }
-            if (Auth::user()->role->akses == 'mentah') {
+            if (Auth::user()->role->akses == 'admin gudang') {
                 return redirect()->route('admin.dashboard.index');
             }
             if (Auth::user()->role->akses == 'kasir') {
+                return redirect()->route('admin.dashboard.index');
+            }
+            if (Auth::user()->role->akses == 'admin') {
                 return redirect()->route('admin.dashboard.index');
             }
         }
