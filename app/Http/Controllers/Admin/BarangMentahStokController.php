@@ -23,7 +23,7 @@ class BarangMentahStokController extends Controller
         $search = request('search.value');
         $data   = Barang::join('stok_barang', 'barang.id', '=', 'stok_barang.barang_id')
             ->where('barang.kategori', 'mentah')
-            ->select('barang.*', 'stok_barang.ukuran', 'stok_barang.satuan', 'stok_barang.stok', 'stok_barang.harga', 'stok_barang.kode', 'stok_barang.foto');
+            ->select('stok_barang.*', 'barang.nama');
         return DataTables::of($data)
             ->filter(function ($query) use ($search, $request) {
                 $query->where(function ($query) use ($search) {

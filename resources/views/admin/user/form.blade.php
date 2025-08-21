@@ -20,7 +20,7 @@
         <span class="input-group-text">@example.com</span>
     </div>
 </div>
-@if (\Auth::user()->role->akses == 'owner')
+@if (\Auth::user()->role->akses == 'admin')
     <div class="">
         <label class="form-label">Role</label>
         <select class="select2 form-select" name="role_id">
